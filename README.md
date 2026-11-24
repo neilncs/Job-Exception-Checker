@@ -8,6 +8,8 @@ chase for each. It finds problems in days, before a customer, the DNO or an MCS 
 Built by Neil with [Claude Code](https://claude.com/claude-code) as a Claude Skill. Python establishes the facts;
 Claude provides the judgement; a person makes the decisions. All data in this repository is synthetic.
 
+**Live dashboard (sample run):** https://neilncs.github.io/Job-Exception-Checker/
+
 ![status](https://img.shields.io/badge/answer--key%20test-22%2F22%20caught%2C%200%20false%20alarms-1c7a4b)
 ![status](https://img.shields.io/badge/bad--input%20tests-11%2F11-1c7a4b)
 ![status](https://img.shields.io/badge/output%20contract%20tests-10%2F10-1c7a4b)
