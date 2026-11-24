@@ -9,3 +9,63 @@ Needs human review: 4. Output: C:\Dev\Skills\C skill for solar\solar-job-excepti
 14:39:48  SUCCESS: report ready at C:\Dev\Skills\C skill for solar\solar-job-exceptions\output\2026-11-24\exceptions_report.md
 Dashboard written: C:\Dev\Skills\C skill for solar\solar-job-exceptions\output\dashboard.html - 2 run(s), latest 2026-11-24 (complete)
 14:39:48  Dashboard updated: output\dashboard.html
+16:30:31  Run started (max 3 attempts, 15 min each)
+16:30:31  Network OK
+Traceback (most recent call last):
+  File "C:\Dev\Skills\Exception checker\Job Exception Checker\scripts\run_checks.py", line 30, in <module>
+    import yaml
+ModuleNotFoundError: No module named 'yaml'
+16:30:32  STOPPED: checker exited with code 1 (2 = input error, see output\2026-11-24\INPUT_ERROR.md)
+Dashboard written: C:\Dev\Skills\Exception checker\Job Exception Checker\output\dashboard.html - 2 run(s), latest 2026-11-24 (complete)
+16:30:50  Run started (max 3 attempts, 15 min each)
+16:30:51  Network OK
+Traceback (most recent call last):
+  File "C:\Dev\Skills\Exception checker\Job Exception Checker\scripts\run_checks.py", line 30, in <module>
+    import yaml
+ModuleNotFoundError: No module named 'yaml'
+16:30:51  STOPPED: checker exited with code 1 (2 = input error, see output\2026-11-24\INPUT_ERROR.md)
+Dashboard written: C:\Dev\Skills\Exception checker\Job Exception Checker\output\dashboard.html - 2 run(s), latest 2026-11-24 (complete)
+16:33:14  Run started (max 3 attempts, 15 min each)
+16:33:14  FAILED: Python or the PyYAML package isn't available to the scheduled run, so the checks could not start. Details: ModuleNotFoundError: No module named 'yaml'. Fix: run `python -m pip install -r requirements.txt` in this folder.
+Dashboard written: C:\Dev\Skills\Exception checker\Job Exception Checker\output\dashboard.html - 2 run(s), latest 2026-11-24 (incomplete)
+16:33:15  Dashboard updated: output\dashboard.html
+16:33:23  Run started (max 3 attempts, 15 min each)
+16:33:24  Python: C:\Python314\python.exe 3.14.6 PyYAML 6.0.4
+16:33:24  Network OK
+Checked 40 jobs as of 2026-11-24: 23 open exceptions (1 new, 22 carried over, 0 closed since last run).
+By check: A1 3, A2 1, A3 1, B1 1, B2 1, B3 1, B4 1, B5 1, B6 1, B7 1, C1 4, C2 2, D1 2, D2 1, D3 1, D4 1
+Needs human review: 4. Output: C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24
+16:33:24  Checks complete
+16:33:24  Attempt 1 started
+16:33:54  Attempt 1 exited with code 0 in 30s; report written: False
+16:35:54  Attempt 2 started
+16:36:26  Attempt 2 exited with code 0 in 32s; report written: False
+16:38:26  Attempt 3 started
+16:38:58  Attempt 3 exited with code 0 in 32s; report written: False
+16:38:58  FAILED: The checks ran (see checks_summary.md and exceptions.json in this folder), but Claude's report did not finish after 3 attempts, so there is no up-to-date report or draft emails today.
+Dashboard written: C:\Dev\Skills\Exception checker\Job Exception Checker\output\dashboard.html - 2 run(s), latest 2026-11-24 (incomplete)
+16:38:58  Dashboard updated: output\dashboard.html
+16:39:41  Run started (max 3 attempts, 15 min each)
+16:39:42  Python: C:\Python314\python.exe 3.14.6 PyYAML 6.0.4
+16:39:42  Network OK
+Checked 40 jobs as of 2026-11-24: 23 open exceptions (1 new, 22 carried over, 0 closed since last run).
+By check: A1 3, A2 1, A3 1, B1 1, B2 1, B3 1, B4 1, B5 1, B6 1, B7 1, C1 4, C2 2, D1 2, D2 1, D3 1, D4 1
+Needs human review: 4. Output: C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24
+16:39:42  Checks complete
+16:39:42  Attempt 1 started
+16:40:59  Attempt 1 exited with code 0 in 77s; report written: True
+16:40:59  SUCCESS: report ready at C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24\exceptions_report.md
+Dashboard written: C:\Dev\Skills\Exception checker\Job Exception Checker\output\dashboard.html - 2 run(s), latest 2026-11-24 (complete)
+16:40:59  Dashboard updated: output\dashboard.html
+16:41:22  Run started (max 3 attempts, 15 min each)
+16:41:22  Python: C:\Python314\python.exe 3.14.6 PyYAML 6.0.4
+16:41:22  Network OK
+Checked 40 jobs as of 2026-11-24: 23 open exceptions (1 new, 22 carried over, 0 closed since last run).
+By check: A1 3, A2 1, A3 1, B1 1, B2 1, B3 1, B4 1, B5 1, B6 1, B7 1, C1 4, C2 2, D1 2, D2 1, D3 1, D4 1
+Needs human review: 4. Output: C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24
+16:41:22  Checks complete
+16:41:22  Attempt 1 started
+16:44:12  Attempt 1 exited with code 0 in 170s; report written: True
+16:44:12  SUCCESS: report ready at C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24\exceptions_report.md
+Dashboard written: C:\Dev\Skills\Exception checker\Job Exception Checker\output\dashboard.html - 2 run(s), latest 2026-11-24 (complete)
+16:44:12  Dashboard updated: output\dashboard.html

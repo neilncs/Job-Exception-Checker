@@ -1,8 +1,8 @@
 {
   "as_of": "2026-11-24",
-  "generated_at": "2026-11-24T14:38:33",
-  "data_dir": "C:\\Dev\\Skills\\C skill for solar\\solar-job-exceptions\\data\\sample",
-  "rules_file": "C:\\Dev\\Skills\\C skill for solar\\solar-job-exceptions\\config\\rules.yaml",
+  "generated_at": "2026-11-24T16:41:22",
+  "data_dir": "C:\\Dev\\Skills\\Exception checker\\Job Exception Checker\\data\\sample",
+  "rules_file": "C:\\Dev\\Skills\\Exception checker\\Job Exception Checker\\config\\rules.yaml",
   "previous_run": "2026-11-23",
   "closed_since_last_run": [],
   "jobs_checked": 40,

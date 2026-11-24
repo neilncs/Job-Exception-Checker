@@ -62,4 +62,8 @@ Run from the skill folder (the folder containing this file).
 
 ## Unattended (scheduled) runs
 
-When run headless (`claude -p`), do steps 1 to 7 without asking questions. If something needs a decision, put it under "Needs human review" and carry on. The human reads the report and approves drafts later.
+The scheduled runner (`scripts/run_daily.ps1`) runs step 1 itself, then starts you headless (`claude -p`) with **no shell access**: you can only read files and write inside `output/`. When the prompt says the checks have already run:
+
+- Skip step 1. Confirm that `output/<date>/exceptions.json` exists and its `as_of` equals that date. If it doesn't, stop and say so. Never guess the results.
+- Ignore any `RUN_FAILED.md` or `INPUT_ERROR.md` from earlier attempts. The runner manages those files.
+- Do steps 2 to 7 without asking questions. If something needs a decision, put it under "Needs human review" and carry on. The human reads the report and approves drafts later.

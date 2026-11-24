@@ -222,7 +222,7 @@ button.act{font:inherit;font-size:13px;border:1px solid var(--line);background:v
 <h2>How this works</h2>
 <ol><li><strong>06:30 - Windows Task Scheduler</strong> wakes the PC and starts <code>scripts/run_daily.ps1</code>.</li>
 <li><strong>Deterministic checks (Python)</strong> validate every input file (data-quality check X1), then run 17 business checks across flow, tracker vs install, compliance and supplier invoices. Same data in, same answer out.</li>
-<li><strong>Claude (headless)</strong> reads the evidence, groups exceptions by root cause, names an owner, sets priority, writes the report and drafts chase emails. Its permissions only allow reading, running the checker and writing to <code>output/</code>.</li>
+<li><strong>Claude (headless)</strong> reads the evidence, groups exceptions by root cause, names an owner, sets priority, writes the report and drafts chase emails. Its permissions only allow reading files and writing to <code>output/</code>, with no shell access: the runner runs the checks itself.</li>
 <li><strong>This dashboard</strong> is rebuilt. A person reviews it, decides the <em>Needs human review</em> items and sends the drafts they approve.</li></ol>
 <h3>What it never does</h3><ul><li>Send an email or message</li><li>Edit the source data or the rules</li><li>Mark anything resolved: an exception closes only when the data is fixed and the next run stops finding it</li></ul>
 <h3>When something goes wrong</h3><ul><li><strong>Broken input</strong> (missing file/column, bad rules): run stops, says why, run log untouched.</li>
@@ -248,7 +248,7 @@ let start = "report"; try{ start = localStorage.getItem("tab") || "report" }catc
 function render(){
   const r = RUNS[cur]; if (!r) { $("#banner").textContent = "No runs yet - run scripts/run_daily.ps1"; return; }
   const B = {complete:["complete", `Report ready - written ${r.report_time.replace("T"," ")}. Review the Needs human review items, then approve and send the drafts you agree with.`],
-    incomplete:["incomplete","Run incomplete - facts only"], checks_only:["checks_only","Checks complete - Claude's report not written yet"],
+    incomplete:["incomplete","Run failed or incomplete - read the note below before using anything on this page"], checks_only:["checks_only","Checks complete - Claude's report not written yet"],
     input_error:["input_error","Input error - the checks did not run"]}[r.status];
   $("#banner").className = "banner " + B[0];
   $("#banner").innerHTML = `<strong>${esc(B[1])}</strong>` + (r.note_html ? `<div>${r.note_html}</div>` : "");

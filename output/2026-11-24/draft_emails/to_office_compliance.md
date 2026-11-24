@@ -1,27 +1,25 @@
 STATUS: DRAFT - NOT SENT - needs approval
 Prepared: 24 Nov 2026 by the Solar Job Exceptions Checker
-To: Office, compliance admin
-Subject: Compliance and DNO items overdue - 9 item(s) to resolve
+To: Office - compliance admin
+Subject: Overdue compliance paperwork - 7 item(s) to resolve
 
 Hello,
 
-Today's exceptions check found the compliance and DNO items below, in priority order. SJ-1039 is new today; the rest were also open yesterday. The timings are placeholders, so check them against current ENA/MCS guidance.
+Today's check found the following compliance paperwork overdue or missing. The time limits come from our own rules file, so check them against current ENA/MCS guidance.
 
 | Job | Reference | What we expected | What we found | What we need from you |
 |---|---|---|---|---|
-| SJ-1027 (urgent, G99) | DNO approval vs install | DNO approval on or before install | Approval 19 Nov 2026; installed 14 Nov 2026 | Check the DNO approval letter today. If the dates are real, escalate to the Ops manager |
-| SJ-1002 | G98 notification | Within 28 days of commissioning (24 Sep 2026) | Not recorded after 61 days | Submit the G98 notification and record the date |
-| SJ-1007 | MCS certificate | Within 10 days of commissioning (11 Nov 2026) | Not recorded after 13 days | Issue the MCS certificate and record the date |
-| SJ-1039 (new) | MCS certificate | Within 10 days of commissioning (13 Nov 2026) | Not recorded after 11 days | Issue the MCS certificate and record the date |
-| SJ-1025 | Documents index | Full document set for a complete job | Electrical Installation Certificate missing | File the EIC once Team C sends it |
-| SJ-1036 | Documents index | Full document set for a complete job | Battery warranty registration missing | Register the battery warranty and file the confirmation |
-| SJ-1011 | Handover pack | Within 14 days of commissioning (24 Oct 2026) | Not recorded after 31 days | Send the handover pack and record the date |
-| SJ-1005 | G99 application | Submitted within 5 days of design complete (03 Nov 2026) | Not submitted after 21 days | Submit the G99 application and record the date |
-| SJ-1012 | DNO approval (G99) | Approval within 45 days of submission (14 Sep 2026) | Outstanding after 71 days | Chase the DNO, quoting the application reference, and record a decision date |
+| SJ-1002 | G98 notification to DNO (commissioned 24 Sep 2026) | Within 28 days | Not recorded after 61 days (33 over) | Submit the G98 notification today and record the date |
+| SJ-1025 | Documents index (job complete) | Full document set | Missing Electrical installation certificate | File the EIC once Team C sends it (requested separately) |
+| SJ-1007 | MCS certificate (commissioned 11 Nov 2026) | Within 10 days | Not recorded after 13 days | Issue the MCS certificate and record the date |
+| SJ-1039 | MCS certificate (commissioned 13 Nov 2026) | Within 10 days | Not recorded after 11 days | Issue the MCS certificate and record the date |
+| SJ-1036 | Documents index (job complete) | Full document set | Missing Battery warranty registration | Register the battery warranty and file the confirmation |
+| SJ-1011 | Handover pack (commissioned 24 Oct 2026) | Sent within 14 days | Not recorded after 31 days (17 over) | Send the handover pack to the customer and record the date |
+| SJ-1005 | G99 application (design complete 03 Nov 2026) | Submitted within 5 days | Not submitted after 21 days | Submit the G99 application, or record why it is being held |
 
-On hold pending review (see the report): SJ-1014, where a larger inverter on a G98 job may affect the DNO route.
+On hold pending review, so no action on these until a manager has looked: SJ-1027 (installed 14 Nov before G99 approval on 19 Nov; data error or real breach) and SJ-1014 (inverter fitted may differ, which could affect the G98 route).
 
-Could you reply by Friday 27 November 2026, please (SJ-1027 today if possible)?
+Could you reply by Friday 27 November 2026, please?
 
 Thanks,
 {{SENDER - filled in by the person approving}}
@@ -29,5 +27,5 @@ Thanks,
 ---
 Reviewer checklist (delete before sending):
 - [ ] Facts checked against the source system
-- [ ] Nothing here is still under "Needs human review"
+- [ ] Nothing here is still under "Needs human review" (SJ-1027 and SJ-1014 are mentioned as on hold only)
 - [ ] Recipient is correct

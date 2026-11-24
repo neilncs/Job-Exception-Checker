@@ -10,7 +10,7 @@ Claude is the engine, not the interface. In real use nobody chats with it.
 |---|---|---|
 | Office / ops manager (the "customer") | **The dashboard** (`output/dashboard.html`): the morning's status, priorities, every exception, draft emails ready to copy | Claude, Python, the terminal |
 | Whoever owns the process (you) | The dashboard, plus `config/rules.yaml` for thresholds and the logs if a run fails | Nothing hidden |
-| Claude | Runs headless inside the 06:30 scheduled job, with permission to read, run the checker and write to `output/` only | Email, the source data, the rules |
+| Claude | Runs headless inside the 06:30 scheduled job, with permission to read files and write to `output/` only, and no shell access | Email, the source data, the rules |
 
 This is the usual pattern for AI-powered operations tools. The model does its work in the background, and people see
 a report, a queue or a set of drafts to approve.
@@ -85,7 +85,7 @@ PDF covers the rest. **Don't log into your own accounts on their computer.**
 |---|---|
 | Why not let Claude do the checks? | Arithmetic must be repeatable and testable. The same data always gives the same answer, and that's what the 22/22 test proves. Claude is used where judgement adds value. |
 | What if Claude gets a root cause wrong? | It's a suggestion with the evidence next to it. A person reviews it before anything is sent, and the facts never depend on Claude. |
-| What stops it emailing a supplier by mistake? | It has no permission to. In the scheduled run, anything outside reading, running the checker and writing to `output/` is refused automatically. |
+| What stops it emailing a supplier by mistake? | It has no permission to. In the scheduled run, anything outside reading files and writing to `output/` is refused automatically. It can't even run a command: the runner runs the checks before Claude starts. |
 | What if the export is broken? | Missing file or column: the run stops, says why, and the day isn't logged as clean. Bad rows: reported and quarantined, so they cause no false alarms. |
 | What if the laptop is asleep or offline? | It wakes at 06:30, keeps itself awake, waits for the network, and stops and retries a stuck attempt. If every attempt fails, the dashboard says so in red. The cloud version runs with the PC off. |
 | How would this scale? | Point `--data` at nightly exports from the job system, CRM and accounts, or run it as a scheduled cloud agent. The thresholds stay in one file the business owns. |

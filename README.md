@@ -73,7 +73,8 @@ factual `checks_summary.md` is still written.
 | | Own the thresholds in `rules.yaml` |
 
 The guardrails are enforced, not just requested. The scheduled run starts Claude Code with
-`--permission-mode dontAsk` and an allow-list of: read files, run `run_checks.py`, and edit files under `output/`.
+`--permission-mode dontAsk` and an allow-list of just two things: read files, and edit files under `output/`. The
+runner runs `run_checks.py` itself beforehand, so Claude has **no shell access at all**.
 Every other tool call is refused automatically. That includes sending email, editing `data/` or `config/`, and running
 any other command.
 
