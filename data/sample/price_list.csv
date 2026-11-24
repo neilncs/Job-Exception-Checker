@@ -1,0 +1,16 @@
+supplier,item,category,unit,agreed_unit_price_gbp,watts
+Brightfield Wholesale Ltd,SP-410B,panel,each,98.0,410
+Brightfield Wholesale Ltd,SP-430M,panel,each,104.0,430
+Brightfield Wholesale Ltd,SP-450M,panel,each,112.0,450
+Brightfield Wholesale Ltd,INV-3.6S,inverter,each,620.0,
+Brightfield Wholesale Ltd,INV-5.0S,inverter,each,740.0,
+Brightfield Wholesale Ltd,HYB-3.6S,inverter,each,1150.0,
+Brightfield Wholesale Ltd,HYB-5.0S,inverter,each,1290.0,
+Brightfield Wholesale Ltd,INV-10T,inverter,each,1480.0,
+Brightfield Wholesale Ltd,INV-15T,inverter,each,1890.0,
+Volt & Co Electrical Supplies,BAT-5.2,battery,each,1850.0,
+Volt & Co Electrical Supplies,BAT-10.4,battery,each,3400.0,
+Volt & Co Electrical Supplies,MK-ROOF,mounting,per panel,38.0,
+Volt & Co Electrical Supplies,ELEC-PACK,sundries,per job,145.0,
+Kestrel Scaffolding Ltd,SCAF-DOM,scaffold,per job,650.0,
+Kestrel Scaffolding Ltd,SCAF-COM,scaffold,per job,1450.0,

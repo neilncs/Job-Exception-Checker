@@ -1,0 +1,11 @@
+﻿14:38:33  Run started (max 3 attempts, 15 min each)
+14:38:33  Network OK
+Checked 40 jobs as of 2026-11-24: 23 open exceptions (1 new, 22 carried over, 0 closed since last run).
+By check: A1 3, A2 1, A3 1, B1 1, B2 1, B3 1, B4 1, B5 1, B6 1, B7 1, C1 4, C2 2, D1 2, D2 1, D3 1, D4 1
+Needs human review: 4. Output: C:\Dev\Skills\C skill for solar\solar-job-exceptions\output\2026-11-24
+14:38:33  Checks complete
+14:38:33  Attempt 1 started
+14:39:48  Attempt 1 exited with code 0 in 75s; report written: True
+14:39:48  SUCCESS: report ready at C:\Dev\Skills\C skill for solar\solar-job-exceptions\output\2026-11-24\exceptions_report.md
+Dashboard written: C:\Dev\Skills\C skill for solar\solar-job-exceptions\output\dashboard.html - 2 run(s), latest 2026-11-24 (complete)
+14:39:48  Dashboard updated: output\dashboard.html

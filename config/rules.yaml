@@ -1,0 +1,113 @@
+# =============================================================================
+# Solar Job Exceptions Checker - rules and thresholds
+# =============================================================================
+# This is the ONLY place thresholds live. The Python checker reads this file;
+# nothing is hard-coded in the scripts.
+#
+# Every number below is a PLACEHOLDER: a sensible starting point from
+# experience, not a regulatory fact. Edit it to match your own business.
+# Items marked "CHECK" are things believed to have a regulatory or scheme
+# basis - check them against current ENA (Engineering Recommendation G98/G99)
+# and MCS guidance before relying on them.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Stage flow (Check A)
+# Stages are listed in delivery order. "max_days" is how long a job may sit
+# waiting for this stage, counted from the previous stage on that job's route.
+# Stages with g99_only: true are skipped for G98 jobs, so on a G98 job
+# scaffold_booked is measured from design_complete, and on a G99 job from
+# dno_approval.
+# -----------------------------------------------------------------------------
+stages:
+  - name: contract_signed
+  - name: survey
+    max_days: 14            # PLACEHOLDER
+  - name: design_complete
+    max_days: 7             # PLACEHOLDER
+  - name: dno_submitted
+    max_days: 5             # PLACEHOLDER
+    g99_only: true
+  - name: dno_approval
+    max_days: 45            # PLACEHOLDER - CHECK against current ENA G99 / DNO response timescales
+    g99_only: true
+  - name: scaffold_booked
+    max_days: 14            # PLACEHOLDER
+  - name: installed
+    max_days: 21            # PLACEHOLDER
+  - name: commissioned
+    max_days: 2             # PLACEHOLDER
+
+# -----------------------------------------------------------------------------
+# Post-commissioning deadlines (Check C)
+# Days allowed after the commissioning date.
+# -----------------------------------------------------------------------------
+post_commissioning:
+  notification_sent:
+    max_days: 28            # PLACEHOLDER - CHECK against current ENA G98/G99 notification timing
+    label: "G98/G99 notification to DNO"
+  mcs_issued:
+    max_days: 10            # PLACEHOLDER - CHECK against current MCS scheme rules for certificate registration
+    label: "MCS certificate issued"
+  handover_sent:
+    max_days: 14            # PLACEHOLDER
+    label: "Handover pack sent to customer"
+
+# -----------------------------------------------------------------------------
+# Date order rules (Check A3)
+# The second stage must not be dated before the first, when both have dates.
+# -----------------------------------------------------------------------------
+date_order:
+  - [contract_signed, survey]
+  - [survey, design_complete]
+  - [design_complete, dno_submitted]
+  - [dno_submitted, dno_approval]
+  - [dno_approval, installed]      # G99: never connect before DNO approval - CHECK against current ENA G99
+  - [design_complete, scaffold_booked]
+  - [scaffold_booked, installed]
+  - [installed, commissioned]
+  - [commissioned, notification_sent]
+  - [commissioned, mcs_issued]
+  - [commissioned, handover_sent]
+
+# -----------------------------------------------------------------------------
+# Required documents per job type (Check C2)
+# "dno_form" resolves to g98_notification or g99_notification from the job's
+# dno_route. MCS applies to the small systems in this sample (CHECK the MCS
+# scope limits for larger commercial systems).
+# -----------------------------------------------------------------------------
+required_documents:
+  domestic_pv:            [mcs_certificate, electrical_installation_certificate, dno_form, panel_warranty, inverter_warranty, handover_pack]
+  domestic_pv_battery:    [mcs_certificate, electrical_installation_certificate, dno_form, panel_warranty, inverter_warranty, battery_warranty, handover_pack]
+  commercial_pv:          [mcs_certificate, electrical_installation_certificate, dno_form, panel_warranty, inverter_warranty, handover_pack]
+  commercial_pv_battery:  [mcs_certificate, electrical_installation_certificate, dno_form, panel_warranty, inverter_warranty, battery_warranty, handover_pack]
+
+# -----------------------------------------------------------------------------
+# Tolerances (Checks B and D)
+# -----------------------------------------------------------------------------
+tolerances:
+  price_over_list_pct: 2.0     # PLACEHOLDER - unit price may be up to this % above the agreed price
+  kwp_difference: 0.1          # PLACEHOLDER - tracker kWp vs installed (panels x watts)
+
+# -----------------------------------------------------------------------------
+# Severity per check (high / medium / low)
+# -----------------------------------------------------------------------------
+severity:                      # PLACEHOLDER - adjust to your own risk appetite
+  A1: medium    # stuck in a stage
+  A2: low       # missing stage date
+  A3: high      # dates out of order
+  B1: medium    # panel count mismatch
+  B2: medium    # panel model mismatch
+  B3: medium    # inverter mismatch
+  B4: medium    # battery mismatch
+  B5: medium    # kWp mismatch
+  B6: low       # install / commissioning date mismatch
+  B7: medium    # no installation record
+  C1: high      # post-commissioning item overdue
+  C2: high      # marked complete with incomplete documents
+  D1: medium    # price above agreed price
+  D2: high      # duplicate invoice line
+  D3: medium    # invoice for a job not in the tracker
+  D4: medium    # invoiced more than installed
+  D5: low       # item not on the price list
+  X1: medium    # bad or duplicate source record (bad date, non-number, unknown code, duplicate ID)
