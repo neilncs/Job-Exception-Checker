@@ -152,7 +152,14 @@ The goal is a finished report waiting at the start of the working day. The task 
 takes about 3 minutes, and the worst case with all three retries is about an hour, so the report is ready well before
 08:00.
 
-**Windows Task Scheduler.** Run this once in PowerShell, changing the path to where the folder lives:
+**Windows Task Scheduler.** From this folder, run once (it works out its own paths, registers the task and starts
+a test run):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\register_task.ps1 -RunNow
+```
+
+Remove it later with `-Remove` instead of `-RunNow`. The script runs the equivalent of these commands:
 
 ```powershell
 $action   = New-ScheduledTaskAction -Execute "powershell.exe" -Argument '-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "C:\Dev\Skills\Exception checker\Job Exception Checker\scripts\run_daily.ps1"'
