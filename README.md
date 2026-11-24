@@ -155,7 +155,7 @@ takes about 3 minutes, and the worst case with all three retries is about an hou
 **Windows Task Scheduler.** Run this once in PowerShell, changing the path to where the folder lives:
 
 ```powershell
-$action   = New-ScheduledTaskAction -Execute "powershell.exe" -Argument '-NoProfile -ExecutionPolicy Bypass -File "C:\Dev\Skills\C skill for solar\solar-job-exceptions\scripts\run_daily.ps1"'
+$action   = New-ScheduledTaskAction -Execute "powershell.exe" -Argument '-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "C:\Dev\Skills\Exception checker\Job Exception Checker\scripts\run_daily.ps1"'
 $trigger  = New-ScheduledTaskTrigger -Daily -At 6:30am
 $settings = New-ScheduledTaskSettingsSet -WakeToRun -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Minutes 90)
 Register-ScheduledTask -TaskName "Solar Job Exceptions" -Action $action -Trigger $trigger -Settings $settings -Description "Daily solar job exceptions check (Claude Code headless)"
