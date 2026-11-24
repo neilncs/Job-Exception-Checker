@@ -1,0 +1,23 @@
+key,job_id,check,detail,description
+SJ-1002|C1|notification_sent,SJ-1002,C1,notification_sent,"Commissioned 60 days ago, no G98 notification sent (limit 28)"
+SJ-1003|B1|panel_count,SJ-1003,B1,panel_count,"Tracker 12 panels, installer recorded 10"
+SJ-1004|D1|BFW-24115:SP-430M,SJ-1004,D1,BFW-24115:SP-430M,Panel unit price 8% above agreed price
+SJ-1005|A1|dno_submitted,SJ-1005,A1,dno_submitted,"G99 design complete 20 days ago, DNO application not submitted (limit 5)"
+SJ-1007|C1|mcs_issued,SJ-1007,C1,mcs_issued,"Commissioned 12 days ago, no MCS certificate (limit 10)"
+SJ-1008|D2|KSL-5328:SCAF-COM,SJ-1008,D2,KSL-5328:SCAF-COM,Scaffold hire billed twice (KSL-5324 and KSL-5328)
+SJ-1009|B2|panel_model,SJ-1009,B2,panel_model,"Tracker SP-430M, installer recorded SP-410B"
+SJ-1011|C1|handover_sent,SJ-1011,C1,handover_sent,"Commissioned 30 days ago, handover pack not sent (limit 14)"
+SJ-1012|A1|dno_approval,SJ-1012,A1,dno_approval,"G99 application submitted 70 days ago, no DNO approval (limit 45)"
+SJ-1014|B3|inverter_model,SJ-1014,B3,inverter_model,"Tracker INV-3.6S, installer recorded INV-5.0S"
+SJ-1016|B7|install_record,SJ-1016,B7,install_record,"Tracker says commissioned, no installation record"
+SJ-1018|A1|installed,SJ-1018,A1,installed,"Scaffold booked 35 days ago, not installed (limit 21)"
+SJ-1019|D1|BFW-24164:INV-3.6S,SJ-1019,D1,BFW-24164:INV-3.6S,Inverter unit price 5% above agreed price
+SJ-1021|A2|survey,SJ-1021,A2,survey,Design complete but no survey date recorded
+SJ-1023|B4|battery_model,SJ-1023,B4,battery_model,"Tracker BAT-10.4, installer recorded BAT-5.2"
+SJ-1025|C2|documents,SJ-1025,C2,documents,"Marked complete, electrical installation certificate missing"
+SJ-1027|A3|dno_approval>installed,SJ-1027,A3,dno_approval>installed,G99 job installed 5 days before DNO approval
+SJ-1030|B5|kwp,SJ-1030,B5,kwp,"Tracker says 3.40 kWp, installed 10 x 430 W = 4.30 kWp"
+SJ-1031|D4|SP-430M,SJ-1031,D4,SP-430M,"16 panels invoiced, 14 installed"
+SJ-1033|B6|install_date,SJ-1033,B6,install_date,Tracker install date and installer record differ by 7 days
+SJ-1036|C2|documents,SJ-1036,C2,documents,"Marked complete, battery warranty registration missing"
+SJ-1140|D3|BFW-24257,SJ-1140,D3,BFW-24257,"Invoice for job SJ-1140, which is not in the tracker"

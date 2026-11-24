@@ -1,0 +1,584 @@
+{
+  "as_of": "2026-11-24",
+  "generated_at": "2026-11-24T14:38:33",
+  "data_dir": "C:\\Dev\\Skills\\C skill for solar\\solar-job-exceptions\\data\\sample",
+  "rules_file": "C:\\Dev\\Skills\\C skill for solar\\solar-job-exceptions\\config\\rules.yaml",
+  "previous_run": "2026-11-23",
+  "closed_since_last_run": [],
+  "jobs_checked": 40,
+  "invoice_lines_checked": 151,
+  "summary": {
+    "total": 23,
+    "by_group": {
+      "A": 5,
+      "C": 6,
+      "D": 5,
+      "B": 7
+    },
+    "by_severity": {
+      "high": 8,
+      "medium": 13,
+      "low": 2
+    },
+    "by_check": {
+      "A3": 1,
+      "C1": 4,
+      "C2": 2,
+      "D2": 1,
+      "A1": 3,
+      "B1": 1,
+      "B2": 1,
+      "B3": 1,
+      "B4": 1,
+      "B5": 1,
+      "B7": 1,
+      "D1": 2,
+      "D3": 1,
+      "D4": 1,
+      "A2": 1,
+      "B6": 1
+    },
+    "by_group_severity": {
+      "A": {
+        "high": 1,
+        "medium": 3,
+        "low": 1
+      },
+      "C": {
+        "high": 6
+      },
+      "D": {
+        "high": 1,
+        "medium": 4
+      },
+      "B": {
+        "medium": 6,
+        "low": 1
+      }
+    },
+    "needs_review": 4,
+    "new": 1,
+    "carried_over": 22,
+    "closed_since_last_run": 0,
+    "value_at_risk_gbp": 3889.8
+  },
+  "exceptions": [
+    {
+      "key": "SJ-1027|A3|dno_approval>installed",
+      "job_id": "SJ-1027",
+      "check": "A3",
+      "check_name": "Dates out of order",
+      "group": "A Flow",
+      "detail": "dno_approval>installed",
+      "what_is_wrong": "installed (14 Nov 2026) is dated before dno_approval (19 Nov 2026)",
+      "expected": "dno_approval on or before installed",
+      "found": "dno_approval: 19 Nov 2026, installed: 14 Nov 2026",
+      "severity": "high",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "days_over": 5,
+        "job_type": "commercial_pv",
+        "dno_route": "G99",
+        "current_stage": "commissioned",
+        "installer_team": "Team B"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1002|C1|notification_sent",
+      "job_id": "SJ-1002",
+      "check": "C1",
+      "check_name": "Post-commissioning item overdue",
+      "group": "C Compliance",
+      "detail": "notification_sent",
+      "what_is_wrong": "G98/G99 notification to DNO not done, 61 days after commissioning (allowed 28)",
+      "expected": "G98/G99 notification to DNO within 28 days of 24 Sep 2026",
+      "found": "not recorded after 61 days",
+      "severity": "high",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "days_over": 33,
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "commissioned",
+        "installer_team": "Team A"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1007|C1|mcs_issued",
+      "job_id": "SJ-1007",
+      "check": "C1",
+      "check_name": "Post-commissioning item overdue",
+      "group": "C Compliance",
+      "detail": "mcs_issued",
+      "what_is_wrong": "MCS certificate issued not done, 13 days after commissioning (allowed 10)",
+      "expected": "MCS certificate issued within 10 days of 11 Nov 2026",
+      "found": "not recorded after 13 days",
+      "severity": "high",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "days_over": 3,
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "commissioned",
+        "installer_team": "Team B"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1011|C1|handover_sent",
+      "job_id": "SJ-1011",
+      "check": "C1",
+      "check_name": "Post-commissioning item overdue",
+      "group": "C Compliance",
+      "detail": "handover_sent",
+      "what_is_wrong": "Handover pack sent to customer not done, 31 days after commissioning (allowed 14)",
+      "expected": "Handover pack sent to customer within 14 days of 24 Oct 2026",
+      "found": "not recorded after 31 days",
+      "severity": "high",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "days_over": 17,
+        "job_type": "domestic_pv_battery",
+        "dno_route": "G98",
+        "current_stage": "commissioned",
+        "installer_team": "Team A"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1039|C1|mcs_issued",
+      "job_id": "SJ-1039",
+      "check": "C1",
+      "check_name": "Post-commissioning item overdue",
+      "group": "C Compliance",
+      "detail": "mcs_issued",
+      "what_is_wrong": "MCS certificate issued not done, 11 days after commissioning (allowed 10)",
+      "expected": "MCS certificate issued within 10 days of 13 Nov 2026",
+      "found": "not recorded after 11 days",
+      "severity": "high",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "days_over": 1,
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "commissioned",
+        "installer_team": "Team B"
+      },
+      "status": "new",
+      "first_seen": "2026-11-24"
+    },
+    {
+      "key": "SJ-1025|C2|documents",
+      "job_id": "SJ-1025",
+      "check": "C2",
+      "check_name": "Complete with documents missing",
+      "group": "C Compliance",
+      "detail": "documents",
+      "what_is_wrong": "Job marked complete but the document set is incomplete",
+      "expected": "all required: MCS certificate, Electrical installation certificate, G98 notification, Panel warranty registration, Inverter warranty registration, Handover pack",
+      "found": "missing: Electrical installation certificate",
+      "severity": "high",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "missing": [
+          "electrical_installation_certificate"
+        ],
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "complete",
+        "installer_team": "Team C"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1036|C2|documents",
+      "job_id": "SJ-1036",
+      "check": "C2",
+      "check_name": "Complete with documents missing",
+      "group": "C Compliance",
+      "detail": "documents",
+      "what_is_wrong": "Job marked complete but the document set is incomplete",
+      "expected": "all required: MCS certificate, Electrical installation certificate, G98 notification, Panel warranty registration, Inverter warranty registration, Battery warranty registration, Handover pack",
+      "found": "missing: Battery warranty registration",
+      "severity": "high",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "missing": [
+          "battery_warranty"
+        ],
+        "job_type": "domestic_pv_battery",
+        "dno_route": "G98",
+        "current_stage": "complete",
+        "installer_team": "Team C"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1008|D2|KSL-5328:SCAF-COM",
+      "job_id": "SJ-1008",
+      "check": "D2",
+      "check_name": "Duplicate invoice line",
+      "group": "D Supplier invoices",
+      "detail": "KSL-5328:SCAF-COM",
+      "what_is_wrong": "SCAF-COM x1 at \u00a31,450.00 billed again (first on KSL-5324)",
+      "expected": "billed once on KSL-5324",
+      "found": "billed again on KSL-5328",
+      "severity": "high",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "value_at_risk_gbp": 1450.0,
+        "first_invoice": "KSL-5324",
+        "supplier": "Kestrel Scaffolding Ltd",
+        "invoice_no": "KSL-5328",
+        "invoice_date": "2026-08-08"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1005|A1|dno_submitted",
+      "job_id": "SJ-1005",
+      "check": "A1",
+      "check_name": "Stuck in stage",
+      "group": "A Flow",
+      "detail": "dno_submitted",
+      "what_is_wrong": "Waiting 21 days for dno_submitted since design_complete on 03 Nov 2026 (allowed 5)",
+      "expected": "dno_submitted within 5 days",
+      "found": "21 days and counting",
+      "severity": "medium",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "days_over": 16,
+        "job_type": "domestic_pv_battery",
+        "dno_route": "G99",
+        "current_stage": "design_complete"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1012|A1|dno_approval",
+      "job_id": "SJ-1012",
+      "check": "A1",
+      "check_name": "Stuck in stage",
+      "group": "A Flow",
+      "detail": "dno_approval",
+      "what_is_wrong": "Waiting 71 days for dno_approval since dno_submitted on 14 Sep 2026 (allowed 45)",
+      "expected": "dno_approval within 45 days",
+      "found": "71 days and counting",
+      "severity": "medium",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "days_over": 26,
+        "job_type": "commercial_pv",
+        "dno_route": "G99",
+        "current_stage": "dno_submitted"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1018|A1|installed",
+      "job_id": "SJ-1018",
+      "check": "A1",
+      "check_name": "Stuck in stage",
+      "group": "A Flow",
+      "detail": "installed",
+      "what_is_wrong": "Waiting 36 days for installed since scaffold_booked on 19 Oct 2026 (allowed 21)",
+      "expected": "installed within 21 days",
+      "found": "36 days and counting",
+      "severity": "medium",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "days_over": 15,
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "scaffold_booked"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1003|B1|panel_count",
+      "job_id": "SJ-1003",
+      "check": "B1",
+      "check_name": "Panel count mismatch",
+      "group": "B Mismatch",
+      "detail": "panel_count",
+      "what_is_wrong": "Panel count differs between tracker and installation record",
+      "expected": "tracker: 12 panels",
+      "found": "installer: 10 panels",
+      "severity": "medium",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "complete",
+        "installer_team": "Team B"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1009|B2|panel_model",
+      "job_id": "SJ-1009",
+      "check": "B2",
+      "check_name": "Panel model mismatch",
+      "group": "B Mismatch",
+      "detail": "panel_model",
+      "what_is_wrong": "Panel model differs between tracker and installation record",
+      "expected": "tracker: SP-430M",
+      "found": "installer: SP-410B",
+      "severity": "medium",
+      "needs_human_review": true,
+      "review_reason": "Could be an approved on-site substitution. Confirm which record is right before changing either, and check design/DNO paperwork still matches.",
+      "context": {
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "complete",
+        "installer_team": "Team A"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1014|B3|inverter_model",
+      "job_id": "SJ-1014",
+      "check": "B3",
+      "check_name": "Inverter mismatch",
+      "group": "B Mismatch",
+      "detail": "inverter_model",
+      "what_is_wrong": "Inverter model differs between tracker and installation record",
+      "expected": "tracker: INV-3.6S",
+      "found": "installer: INV-5.0S",
+      "severity": "medium",
+      "needs_human_review": true,
+      "review_reason": "Could be an approved on-site substitution. Confirm which record is right before changing either, and check design/DNO paperwork still matches.",
+      "context": {
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "complete",
+        "installer_team": "Team C"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1023|B4|battery_model",
+      "job_id": "SJ-1023",
+      "check": "B4",
+      "check_name": "Battery mismatch",
+      "group": "B Mismatch",
+      "detail": "battery_model",
+      "what_is_wrong": "Battery model differs between tracker and installation record",
+      "expected": "tracker: BAT-10.4",
+      "found": "installer: BAT-5.2",
+      "severity": "medium",
+      "needs_human_review": true,
+      "review_reason": "Could be an approved on-site substitution. Confirm which record is right before changing either, and check design/DNO paperwork still matches.",
+      "context": {
+        "job_type": "domestic_pv_battery",
+        "dno_route": "G98",
+        "current_stage": "complete",
+        "installer_team": "Team A"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1030|B5|kwp",
+      "job_id": "SJ-1030",
+      "check": "B5",
+      "check_name": "kWp mismatch",
+      "group": "B Mismatch",
+      "detail": "kwp",
+      "what_is_wrong": "System size in tracker does not match panels installed",
+      "expected": "tracker: 3.40 kWp",
+      "found": "installed: 10 x 430 W = 4.30 kWp",
+      "severity": "medium",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "complete",
+        "installer_team": "Team B"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1016|B7|install_record",
+      "job_id": "SJ-1016",
+      "check": "B7",
+      "check_name": "No installation record",
+      "group": "B Mismatch",
+      "detail": "install_record",
+      "what_is_wrong": "Tracker shows the job installed but there is no installation record",
+      "expected": "installation record for install on 20 Nov 2026",
+      "found": "no record",
+      "severity": "medium",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "commissioned"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1004|D1|BFW-24115:SP-430M",
+      "job_id": "SJ-1004",
+      "check": "D1",
+      "check_name": "Price above agreed price",
+      "group": "D Supplier invoices",
+      "detail": "BFW-24115:SP-430M",
+      "what_is_wrong": "SP-430M charged 8.0% above agreed price (tolerance 2%)",
+      "expected": "agreed: \u00a3104.00 each",
+      "found": "invoiced: \u00a3112.32 each",
+      "severity": "medium",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "value_at_risk_gbp": 332.8,
+        "over_pct": 8.0,
+        "supplier": "Brightfield Wholesale Ltd",
+        "invoice_no": "BFW-24115",
+        "invoice_date": "2026-06-17"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1019|D1|BFW-24164:INV-3.6S",
+      "job_id": "SJ-1019",
+      "check": "D1",
+      "check_name": "Price above agreed price",
+      "group": "D Supplier invoices",
+      "detail": "BFW-24164:INV-3.6S",
+      "what_is_wrong": "INV-3.6S charged 5.0% above agreed price (tolerance 2%)",
+      "expected": "agreed: \u00a3620.00 each",
+      "found": "invoiced: \u00a3651.00 each",
+      "severity": "medium",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "value_at_risk_gbp": 31.0,
+        "over_pct": 5.0,
+        "supplier": "Brightfield Wholesale Ltd",
+        "invoice_no": "BFW-24164",
+        "invoice_date": "2026-09-14"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1140|D3|BFW-24257",
+      "job_id": "SJ-1140",
+      "check": "D3",
+      "check_name": "Invoice for unknown job",
+      "group": "D Supplier invoices",
+      "detail": "BFW-24257",
+      "what_is_wrong": "Invoice BFW-24257 is for SJ-1140, which is not in the job tracker",
+      "expected": "job ID in tracker",
+      "found": "SJ-1140 not found",
+      "severity": "medium",
+      "needs_human_review": true,
+      "review_reason": "Could be a supplier typo (closest: SJ-1040, SJ-1014), a cancelled job, or a job missing from the tracker. Do not pay until confirmed.",
+      "context": {
+        "value_at_risk_gbp": 1868.0,
+        "supplier": "Brightfield Wholesale Ltd",
+        "invoice_no": "BFW-24257",
+        "invoice_date": "2026-11-14"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1031|D4|SP-430M",
+      "job_id": "SJ-1031",
+      "check": "D4",
+      "check_name": "Invoiced more than installed",
+      "group": "D Supplier invoices",
+      "detail": "SP-430M",
+      "what_is_wrong": "More SP-430M invoiced than the installer recorded fitting",
+      "expected": "installed: 14",
+      "found": "invoiced: 16",
+      "severity": "medium",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "value_at_risk_gbp": 208.0,
+        "supplier": "Brightfield Wholesale Ltd",
+        "installer_team": "Team A"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1021|A2|survey",
+      "job_id": "SJ-1021",
+      "check": "A2",
+      "check_name": "Missing stage date",
+      "group": "A Flow",
+      "detail": "survey",
+      "what_is_wrong": "Current stage is 'design_complete' but no survey date is recorded",
+      "expected": "survey date: a date",
+      "found": "survey date: blank",
+      "severity": "low",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "design_complete"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    },
+    {
+      "key": "SJ-1033|B6|install_date",
+      "job_id": "SJ-1033",
+      "check": "B6",
+      "check_name": "Date mismatch",
+      "group": "B Mismatch",
+      "detail": "install_date",
+      "what_is_wrong": "Install date differs",
+      "expected": "tracker: 15 Aug 2026",
+      "found": "installer: 08 Aug 2026",
+      "severity": "low",
+      "needs_human_review": false,
+      "review_reason": "",
+      "context": {
+        "job_type": "domestic_pv",
+        "dno_route": "G98",
+        "current_stage": "complete",
+        "installer_team": "Team B"
+      },
+      "status": "carried_over",
+      "first_seen": "2026-11-23"
+    }
+  ]
+}

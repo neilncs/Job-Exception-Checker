@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+# Per-attempt Claude console output (the daily summary log in output/logs/ is kept as evidence)
+output/logs/*-attempt*.log
+# Local editor / OS files
+.vscode/
+.DS_Store
+Thumbs.db
