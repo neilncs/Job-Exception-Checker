@@ -1,3 +1,3 @@
-run_date,jobs_checked,total_open,A_flow,B_mismatch,C_compliance,D_invoices,X_data_quality,high,medium,low,needs_review,new,carried_over,closed_since_last_run,value_at_risk_gbp
-2026-11-23,40,22,5,7,5,5,,7,13,2,4,22,0,0,3889.80
-2026-11-24,40,23,5,7,6,5,0,8,13,2,4,1,22,0,3889.80
+run_date,jobs_checked,total_open,A_flow,B_mismatch,C_compliance,D_invoices,X_data_quality,high,medium,low,needs_review,new,carried_over,closed_since_last_run,overdue,value_at_risk_gbp
+2026-11-23,40,22,5,7,5,5,,7,13,2,4,22,0,0,,3889.80
+2026-11-24,40,23,5,7,6,5,0,8,13,2,4,1,22,0,0,3889.80

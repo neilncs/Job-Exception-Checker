@@ -111,3 +111,13 @@ severity:                      # PLACEHOLDER - adjust to your own risk appetite
   D4: medium    # invoiced more than installed
   D5: low       # item not on the price list
   X1: medium    # bad or duplicate source record (bad date, non-number, unknown code, duplicate ID)
+
+# -----------------------------------------------------------------------------
+# Response times (working days, Mon-Fri, from the day an exception is first
+# raised). Drive the "due by" date on every action and the overdue count.
+# Bank holidays are not excluded.
+# -----------------------------------------------------------------------------
+response_working_days:         # PLACEHOLDER - set to your own service levels
+  high: 1
+  medium: 3
+  low: 5

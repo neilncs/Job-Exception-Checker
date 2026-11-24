@@ -1,29 +1,28 @@
 STATUS: DRAFT - NOT SENT - needs approval
-Prepared: 24 Nov 2026 by the Solar Job Exceptions Checker
-To: Brightfield Wholesale Ltd - accounts team
-Subject: Invoice queries (pricing and quantity) - 3 item(s) to resolve
+Prepared: 24 Nov 2026
+To: Accounts team, Brightfield Wholesale Ltd
+Subject: Credit note request: BFW-24115, BFW-24164 (jobs SJ-1004, SJ-1019)
 
 Hello,
 
-While reconciling recent invoices, we found two lines priced above our agreed rates and one job where the quantity billed is higher than the quantity fitted.
+Please issue credit notes for the two invoice lines below, which are above our agreed prices.
 
-| Job | Reference | What we expected | What we found | What we need from you |
+| Job | Reference | Agreed / expected | Invoiced / recorded | Requested action |
 |---|---|---|---|---|
-| SJ-1004 | BFW-24115 (17 Jun 2026), SP-430M | Agreed price £104.00 each | Invoiced at £112.32 each (8.0% over; £332.80 in total) | A credit note for £332.80, or confirmation of the price you have on file for us |
-| SJ-1019 | BFW-24164 (14 Sep 2026), INV-3.6S | Agreed price £620.00 each | Invoiced at £651.00 each (5.0% over; £31.00) | A credit note for £31.00, or confirmation of the price you have on file for us |
-| SJ-1031 | SP-430M panels | 14 panels (the number fitted) | 16 panels invoiced (2 more; £208.00) | A copy of the delivery note, and a credit for the 2 panels if they were returned or not delivered |
+| SJ-1004 | BFW-24115, SP-430M | £104.00 each | £112.32 each (+8.0%) | Credit note for £332.80 against BFW-24115 |
+| SJ-1019 | BFW-24164, INV-3.6S | £620.00 each | £651.00 each (+5.0%) | Credit note for £31.00 against BFW-24164 |
 
-We are also checking invoice BFW-24257 (14 Nov 2026, £1,868.00) on our side. It quotes job SJ-1140, which we can't match yet. That item is on hold pending our review, and we will be in touch separately.
+We are reviewing invoice BFW-24257 and job SJ-1031 separately and will be in touch about them.
 
-Could you reply by Friday 27 November 2026, please?
+Please reply by 26 Nov 2026.
 
-Thanks,
-{{SENDER - filled in by the person approving}}
+Kind regards,
+
+Neil
+Operations
 
 ---
 Reviewer checklist (delete before sending):
-- [ ] Facts checked against the source system
-- [ ] Confirm our price list is current (if Brightfield's prices went up legitimately, the D1 lines are our price list, not their error)
-- [ ] For SJ-1031, wait for Team A to confirm the fitted count before asking for a credit
-- [ ] Nothing here is still under "Needs human review" (BFW-24257 is mentioned as on hold only)
-- [ ] Recipient is correct
+- [ ] Figures checked against the source system
+- [ ] Nothing here is awaiting a decision
+- [ ] Recipient and reply-by date are correct

@@ -1,29 +1,30 @@
 STATUS: DRAFT - NOT SENT - needs approval
-Prepared: 24 Nov 2026 by the Solar Job Exceptions Checker
-To: Office - operations / scheduling
-Subject: Stuck jobs and tracker corrections - 5 item(s) to resolve
+Prepared: 24 Nov 2026
+To: Office (operations)
+Subject: Stalled jobs and tracker corrections: jobs SJ-1012, SJ-1005, SJ-1018, SJ-1016, SJ-1030, SJ-1021
 
 Hello,
 
-Today's check found the following jobs stuck past their stage limit, or with tracker records that need correcting.
+Please move the three stalled jobs on and correct the three tracker records below by the dates shown.
 
-| Job | Reference | What we expected | What we found | What we need from you |
+| Job | Reference | Agreed / expected | Invoiced / recorded | Requested action |
 |---|---|---|---|---|
-| SJ-1012 | G99 DNO approval (submitted 14 Sep 2026) | Decision within 45 days | 71 days and counting (26 over) | Chase the DNO for a decision using the application reference |
-| SJ-1018 | Install (scaffold booked 19 Oct 2026) | Installed within 21 days | 36 days and counting (15 over) | Confirm an install date, and check whether the scaffold is still up and on hire |
-| SJ-1016 | Installation record (installed 20 Nov 2026) | Job sheet on file | No installation record | Find out which team fitted it and get the job sheet submitted |
-| SJ-1030 | Tracker kWp | 10 x 430 W = 4.30 kWp | Tracker shows 3.40 kWp | Correct the tracker (it looks like a typo), and check the MCS/DNO paperwork used 4.30 kWp |
-| SJ-1021 | Survey date | A survey date for a job at design complete | Blank | Add the survey date from the survey record |
+| SJ-1012 | G99 application, DNO approval | Approval within 45 days of submission on 14 Sep 2026 | Waiting 71 days | Chase the DNO for a decision by 26 Nov 2026 |
+| SJ-1005 | G99 application, DNO submission | Submitted within 5 days of design complete on 03 Nov 2026 | Waiting 21 days | Submit the G99 application by 26 Nov 2026 |
+| SJ-1018 | Install after scaffold booking | Installed within 21 days of scaffold booked on 19 Oct 2026 | Waiting 36 days | Book a confirmed install date by 26 Nov 2026 |
+| SJ-1016 | Installation record | Record for install on 20 Nov 2026 | No record | Obtain the installation record from the team that fitted it by 26 Nov 2026 |
+| SJ-1030 | Tracker system size | 10 x 430 W = 4.30 kWp installed | Tracker 3.40 kWp | Correct the tracker to 4.30 kWp by 26 Nov 2026 |
+| SJ-1021 | Tracker survey date | Survey date recorded for a job at design complete | Blank | Enter the survey date from the survey record by 30 Nov 2026 |
 
-On hold pending review, so please don't change these records yet: SJ-1009 (panel model), SJ-1023 (battery model) and SJ-1140 (Brightfield invoice BFW-24257 for a job not in the tracker; do not pay).
+Please reply by 26 Nov 2026.
 
-Could you reply by Friday 27 November 2026, please?
+Kind regards,
 
-Thanks,
-{{SENDER - filled in by the person approving}}
+Neil
+Operations
 
 ---
 Reviewer checklist (delete before sending):
-- [ ] Facts checked against the source system
-- [ ] Nothing here is still under "Needs human review" (SJ-1009, SJ-1023 and SJ-1140 are mentioned as on hold only)
-- [ ] Recipient is correct
+- [ ] Figures checked against the source system
+- [ ] Nothing here is awaiting a decision
+- [ ] Recipient and reply-by date are correct

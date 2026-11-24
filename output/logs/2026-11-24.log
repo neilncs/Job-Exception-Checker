@@ -69,3 +69,31 @@ Needs human review: 4. Output: C:\Dev\Skills\Exception checker\Job Exception Che
 16:44:12  SUCCESS: report ready at C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24\exceptions_report.md
 Dashboard written: C:\Dev\Skills\Exception checker\Job Exception Checker\output\dashboard.html - 2 run(s), latest 2026-11-24 (complete)
 16:44:12  Dashboard updated: output\dashboard.html
+17:13:09  Run started (max 3 attempts, 15 min each)
+17:13:09  Python: C:\Python314\python.exe 3.14.6 PyYAML 6.0.4
+17:13:09  Network OK
+Checked 40 jobs as of 2026-11-24: 23 open exceptions (1 new, 22 carried over, 0 closed since last run).
+By check: A1 3, A2 1, A3 1, B1 1, B2 1, B3 1, B4 1, B5 1, B6 1, B7 1, C1 4, C2 2, D1 2, D2 1, D3 1, D4 1
+Needs human review: 4. Output: C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24
+17:13:09  Checks complete
+17:13:09  Attempt 1 started
+17:16:47  Attempt 1 exited with code 0 in 218s; report written: True
+VALID: actions.json covers all 23 exceptions in 7 root-cause groups
+17:16:47  Validation of actions.json: passed
+17:16:47  SUCCESS: report ready at C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24\exceptions_report.md
+Dashboard written: C:\Dev\Skills\Exception checker\Job Exception Checker\output\dashboard.html - 2 run(s), latest 2026-11-24 (complete)
+17:16:48  Dashboard updated: output\dashboard.html
+17:17:29  Run started (max 3 attempts, 15 min each)
+17:17:29  Python: C:\Python314\python.exe 3.14.6 PyYAML 6.0.4
+17:17:29  Network OK
+Checked 40 jobs as of 2026-11-24: 23 open exceptions (1 new, 22 carried over, 0 closed since last run).
+By check: A1 3, A2 1, A3 1, B1 1, B2 1, B3 1, B4 1, B5 1, B6 1, B7 1, C1 4, C2 2, D1 2, D2 1, D3 1, D4 1
+Needs human review: 4. Output: C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24
+17:17:29  Checks complete
+17:17:29  Attempt 1 started
+17:21:12  Attempt 1 exited with code 0 in 223s; report written: True
+VALID: actions.json covers all 23 exceptions in 7 root-cause groups
+17:21:12  Validation of actions.json: passed
+17:21:12  SUCCESS: report ready at C:\Dev\Skills\Exception checker\Job Exception Checker\output\2026-11-24\exceptions_report.md
+Dashboard written: C:\Dev\Skills\Exception checker\Job Exception Checker\output\dashboard.html - 2 run(s), latest 2026-11-24 (complete)
+17:21:12  Dashboard updated: output\dashboard.html

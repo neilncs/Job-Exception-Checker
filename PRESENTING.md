@@ -1,92 +1,73 @@
-# Presenting this project
+# Running and presenting
 
-How to run it, where to look, and how to show it in an interview, all **without typing anything into Claude**.
+How to run the checker, where everything is, and how to present it. None of it involves typing into Claude.
 
-## Who sees what
+## Who uses what
 
-Claude is the engine, not the interface. In real use nobody chats with it.
-
-| Person | What they use | What they never see |
+| Person | Uses | Never needs |
 |---|---|---|
-| Office / ops manager (the "customer") | **The dashboard** (`output/dashboard.html`): the morning's status, priorities, every exception, draft emails ready to copy | Claude, Python, the terminal |
-| Whoever owns the process (you) | The dashboard, plus `config/rules.yaml` for thresholds and the logs if a run fails | Nothing hidden |
-| Claude | Runs headless inside the 06:30 scheduled job, with permission to read files and write to `output/` only, and no shell access | Email, the source data, the rules |
+| Office or operations manager | The dashboard (`output/dashboard.html`): status, decisions, priority actions, analytics, drafts to copy | Claude, Python, a terminal |
+| Process owner | The dashboard, `config/rules.yaml` for thresholds, the logs if a run fails | Anything hidden |
+| Claude | Runs headless inside the 06:30 job; reads files and writes to `output/` only, with no shell access | Email, source data, rules |
 
-This is the usual pattern for AI-powered operations tools. The model does its work in the background, and people see
-a report, a queue or a set of drafts to approve.
+This is the usual shape of an AI-assisted operations tool: the model works in the background, and people see a
+queue of decisions and drafts to approve.
 
-## Running it without Claude
+## Running it
 
-| Way | How | When to use it |
+| To | Do |
+|---|---|
+| See this morning's results | Double-click **`Open dashboard.cmd`** |
+| Refresh now (about 2 minutes) | Double-click **`Run check now.cmd`** |
+| Show the scheduled job | Task Scheduler › Task Scheduler Library › **Solar Job Exceptions** (*Last Run Result* `0x0` = success; *History* tab for past runs) |
+| Register or remove the schedule | `scripts\register_task.ps1 -RunNow` / `-Remove` |
+
+## Where everything is
+
+| What | Where |
+|---|---|
+| Everything in one place | `output/dashboard.html` (any browser, works offline) |
+| The day's report | `output/YYYY-MM-DD/exceptions_report.md` (dashboard: *Full report*) |
+| Classification (cause, owner, priority) | `output/YYYY-MM-DD/actions.json`, validated by `scripts/validate_actions.py` |
+| Draft emails, never sent | `output/YYYY-MM-DD/draft_emails/` (dashboard: *Draft emails*, with *Copy text*) |
+| Facts only | `output/YYYY-MM-DD/exceptions.json`, `checks_summary.md` |
+| Trend | `output/run_log.csv` (dashboard: chart and *Run history*) |
+| What happened during a run | `output/logs/YYYY-MM-DD.log` (dashboard: *Logs*) |
+| A failed day | `RUN_FAILED.md` or `INPUT_ERROR.md` in that day's folder; amber or red banner |
+| Test evidence | `output/test_results.md`; rerun the three `scripts/test_*.py` scripts |
+
+## Presenting
+
+| Material | Needs your laptop? | Use |
 |---|---|---|
-| **Automatic** | The scheduled task runs at 06:30 every day (see README, "Scheduling it daily") | Normal use |
-| **One click** | Double-click **`Run check now.cmd`** in the project folder. It takes about 3 minutes and then opens the dashboard | To refresh it on demand |
-| **Task Scheduler** | Start menu, then *Task Scheduler*, then *Task Scheduler Library*, then **Solar Job Exceptions**, then **Run** | To show the real scheduled job in action |
-| **Just look** | Double-click **`Open dashboard.cmd`** | To show this morning's results without running anything |
+| GitHub repository | No | Send beforehand; the README is the full write-up |
+| Interactive walkthrough page | No | One link covering workflow, controls, evidence and real output |
+| Slide deck (PDF or PPTX) | No | Frame the first minute; leave behind afterwards |
+| Live dashboard | Yes | The proof that it runs |
+| Recorded video (optional) | Only to record | Backup if anything fails on the day |
 
-## Where to look
+**Video interview:** slides 2 to 4 (30 s), dashboard (60 s), Task Scheduler and test results (20 s), the
+e-commerce slide (10 s). The script is in `DEMO.md`. Show this morning's run rather than starting one live.
 
-| What | Where | Opens with |
-|---|---|---|
-| Everything in one place | `output/dashboard.html` | Any browser. It works offline and needs no login |
-| Claude's report | `output/YYYY-MM-DD/exceptions_report.md` (also the dashboard's *Report* tab) | Browser tab, VS Code or GitHub |
-| Draft emails (never sent) | `output/YYYY-MM-DD/draft_emails/` (also the *Draft emails* tab, with a *Copy text* button) | Same |
-| Facts only, no Claude | `output/YYYY-MM-DD/checks_summary.md`, `exceptions.json` | Same |
-| Trend over time | `output/run_log.csv` (also the chart and the *Run history* tab) | Excel |
-| What happened during the run | `output/logs/YYYY-MM-DD.log`: each step and attempt, with times | Notepad, or the *Logs* tab |
-| Did the scheduled task run? | Task Scheduler, **Solar Job Exceptions**: *Last Run Result* `0x0` means success, and the *History* tab lists past runs | Task Scheduler |
-| A failed day | `output/YYYY-MM-DD/RUN_FAILED.md` or `INPUT_ERROR.md`, also shown as a red or amber banner on the dashboard | Same |
-| Proof it's correct | `output/test_results.md`. Re-run with `python scripts/test_against_answer_key.py` and `python scripts/test_bad_input.py` | Same |
+**In person without your laptop:** open the walkthrough page or the repository on their screen. Neither needs a
+login. Don't sign into your own accounts on someone else's computer.
 
-## The interview: what to have ready
+## The day before
 
-| Material | Needs your laptop? | Use it for |
-|---|---|---|
-| **GitHub repo link** | No | Send it beforehand. They can browse the README, code, a real report and the run history whenever they like |
-| **Interactive walkthrough page** (claude.ai link) | No | The best single link: workflow diagram, real report, drafts, error handling, test results |
-| **Slide deck** (PDF/PPTX) | No | The first 60 seconds: problem, approach, results. Works on their screen in person |
-| **Live dashboard** | Yes | The "it's real" moment on a video call |
-| **Recorded video** (optional) | Only to record it | Backup if anything fails on the day |
-
-### Video interview (screen share), about 2 minutes
-
-1. **Slides, 30 s:** the problem, and the split between Python and Claude.
-2. **Dashboard, 60 s:** double-click `Open dashboard.cmd`. Show the green banner, the numbers, the trend, then *Report*,
-   then *Draft emails* ("not sent"), then one *Needs human review* item.
-3. **Proof, 20 s:** Task Scheduler showing the 06:30 task, *Last Run Result* `0x0`, and `test_results.md` showing
-   22 of 22 caught.
-4. **Close, 10 s:** the e-commerce mapping slide.
-
-Don't start a fresh run live, because it takes about 3 minutes. Show this morning's run. If they ask to see it run,
-double-click `Run check now.cmd` at the start and come back to it at the end.
-
-### In person, without your laptop
-
-Open the **walkthrough page link** or the **GitHub repo** on their screen. Neither needs a login. The slide deck as a
-PDF covers the rest. **Don't log into your own accounts on their computer.**
-
-## The day before: checklist
-
-- [ ] `claude auth status` shows `"loggedIn": true`. A sign-in can expire, and the scheduled run then fails at 06:30.
-- [ ] This morning's run is green on the dashboard. If not, double-click `Run check now.cmd`.
-- [ ] `python scripts/test_against_answer_key.py` and `python scripts/test_bad_input.py` both say PASS.
-- [ ] Windows notifications are off (Focus) and other windows are closed.
-- [ ] The links are in your notes: repo, walkthrough page, deck.
-
-## Recording the backup video (optional)
-
-- **Windows:** use Snipping Tool's **Record** button (`Win + Shift + R`), or Clipchamp to add your voice afterwards.
-- **Script:** follow `DEMO.md`. Keep it under 2½ minutes.
-- **Hosting:** upload it as an unlisted YouTube video or a Loom link, and put the link in the repo README.
+- [ ] `claude auth status` shows `"loggedIn": true` (an expired sign-in stops the 06:30 run)
+- [ ] This morning's run is green; if not, double-click `Run check now.cmd`
+- [ ] The three test scripts pass
+- [ ] Repository public, deck and walkthrough shared
+- [ ] Notifications off; other windows closed
 
 ## Likely questions
 
-| Question | Short answer |
+| Question | Answer |
 |---|---|
-| Why not let Claude do the checks? | Arithmetic must be repeatable and testable. The same data always gives the same answer, and that's what the 22/22 test proves. Claude is used where judgement adds value. |
-| What if Claude gets a root cause wrong? | It's a suggestion with the evidence next to it. A person reviews it before anything is sent, and the facts never depend on Claude. |
-| What stops it emailing a supplier by mistake? | It has no permission to. In the scheduled run, anything outside reading files and writing to `output/` is refused automatically. It can't even run a command: the runner runs the checks before Claude starts. |
-| What if the export is broken? | Missing file or column: the run stops, says why, and the day isn't logged as clean. Bad rows: reported and quarantined, so they cause no false alarms. |
-| What if the laptop is asleep or offline? | It wakes at 06:30, keeps itself awake, waits for the network, and stops and retries a stuck attempt. If every attempt fails, the dashboard says so in red. The cloud version runs with the PC off. |
-| How would this scale? | Point `--data` at nightly exports from the job system, CRM and accounts, or run it as a scheduled cloud agent. The thresholds stay in one file the business owns. |
-| What's next? | Read the exports straight from the systems' APIs. Track how long each exception stays open. A weekly summary of which upstream fixes reduced exceptions. |
+| Why not let Claude do the checks? | Arithmetic has to be repeatable and testable. The same data always gives the same exceptions, which is what the 22-of-22 test proves. The model is used for judgement, and its output is validated. |
+| How do you know Claude's classification is complete? | It writes structured JSON that code checks: every exception exactly once, causes and owners from fixed lists, every flagged item marked as a decision. If it fails, the run retries and then shows amber. |
+| What stops it emailing a supplier? | It has no permission to. In the scheduled run it can read files and write to the output folder, nothing else. It doesn't even have a shell. |
+| What if an export is broken? | Missing file or column: the run stops, says which, and the day isn't logged. Bad rows: reported and quarantined so they cause no false alarms. |
+| What if the PC is asleep or offline? | It wakes at 06:30 on mains power, stays awake, waits for the network and retries a stalled step. Anything that fails shows amber or red. A cloud-scheduled version would remove the PC dependency. |
+| What difference would it make? | On a 40-job operation, roughly 80% less time spent reconciling, every invoice line checked instead of a sample, and missed deadlines found the next day instead of at month end. The assumptions are in the README. |
+| What would you do next? | Read directly from the systems' APIs; report time-to-close by owner; track which upstream fixes actually reduced exceptions. |

@@ -1,25 +1,27 @@
 STATUS: DRAFT - NOT SENT - needs approval
-Prepared: {{DATE}} by the Solar Job Exceptions Checker
-To: {{RECIPIENT (role or supplier accounts team, not a personal name)}}
-Subject: {{SHORT SUBJECT}} - {{N}} item(s) to resolve
+Prepared: {{DD Mon YYYY}}
+To: {{Accounts team, company name / internal team}}
+Subject: {{Request type}}: {{references}} (jobs {{SJ-xxxx, SJ-xxxx}})
 
 Hello,
 
-{{ONE SENTENCE: why we are writing.}}
+{{One sentence stating the request, e.g. "Please issue credit notes for the two invoice lines below, which are above our agreed prices."}}
 
-| Job | Reference | What we expected | What we found | What we need from you |
+| Job | Reference | Agreed / expected | Invoiced / recorded | Requested action |
 |---|---|---|---|---|
-| {{SJ-xxxx}} | {{invoice no. / stage}} | {{value}} | {{value}} | {{credit note / corrected record / date}} |
+| {{SJ-xxxx}} | {{invoice no., item}} | {{value}} | {{value}} | {{credit note for £x / corrected record / date}} |
 
-{{Optional: one sentence on anything on hold pending our own review.}}
+{{Optional, one sentence: "We are reviewing [reference] separately and will be in touch about it."}}
 
-Could you reply by {{DATE + 3 working days}}, please?
+Please reply by {{due date, DD Mon YYYY}}.
 
-Thanks,
-{{SENDER - filled in by the person approving}}
+Kind regards,
+
+Neil
+Operations
 
 ---
 Reviewer checklist (delete before sending):
-- [ ] Facts checked against the source system
-- [ ] Nothing here is still under "Needs human review"
-- [ ] Recipient is correct
+- [ ] Figures checked against the source system
+- [ ] Nothing here is awaiting a decision
+- [ ] Recipient and reply-by date are correct

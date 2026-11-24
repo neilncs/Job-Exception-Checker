@@ -1,26 +1,27 @@
 STATUS: DRAFT - NOT SENT - needs approval
-Prepared: 24 Nov 2026 by the Solar Job Exceptions Checker
-To: Installer Team C - team lead
-Subject: Missing documents on completed jobs - 2 item(s) to resolve
+Prepared: 24 Nov 2026
+To: Installer Team C
+Subject: Electrical installation certificate needed: job SJ-1025
 
 Hello,
 
-Two of your jobs are marked complete, but a required document is missing from the file for each.
+Please send the signed Electrical installation certificate for the job below to Office (compliance), as the job is marked complete without it on file.
 
-| Job | Reference | What we expected | What we found | What we need from you |
+| Job | Reference | Agreed / expected | Invoiced / recorded | Requested action |
 |---|---|---|---|---|
-| SJ-1025 | Electrical Installation Certificate | EIC on file for a completed job | No EIC in the documents index | Send a copy of the EIC for this install |
-| SJ-1036 | Battery warranty registration | Battery warranty registered and on file | No battery warranty registration in the documents index | Send the battery serial number and any registration confirmation you have, so the office can register it |
+| SJ-1025 | Electrical installation certificate | Filed before the job is marked complete | Missing from the document set | Send the signed EIC to Office (compliance) |
 
-We are also checking the inverter model on SJ-1014 on our side. That one is on hold pending our review, and we may come back to you with a question.
+We are reviewing job SJ-1014 separately and will be in touch about it.
 
-Could you reply by Friday 27 November 2026, please?
+Please reply by 24 Nov 2026.
 
-Thanks,
-{{SENDER - filled in by the person approving}}
+Kind regards,
+
+Neil
+Operations
 
 ---
 Reviewer checklist (delete before sending):
-- [ ] Facts checked against the source system (check whether the documents exist but were simply not filed)
-- [ ] Nothing here is still under "Needs human review" (SJ-1014 is mentioned as on hold only)
-- [ ] Recipient is correct
+- [ ] Figures checked against the source system
+- [ ] Nothing here is awaiting a decision
+- [ ] Recipient and reply-by date are correct

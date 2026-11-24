@@ -115,8 +115,8 @@ $argLine = @(
     "--allowedTools", "Read", "Glob", "Grep", "`"Edit(./output/**)`""
 ) -join " "
 
-# Clear today's previous report and drafts, so everything in the folder comes from this run
-Remove-Item $report, (Join-Path $runDir "draft_emails\*.md") -ErrorAction SilentlyContinue
+# Clear today's previous report, actions and drafts, so everything in the folder comes from this run
+Remove-Item $report, (Join-Path $runDir "actions.json"), (Join-Path $runDir "draft_emails\*.md") -ErrorAction SilentlyContinue
 
 $ok = $false
 for ($attempt = 1; $attempt -le $MaxAttempts -and -not $ok; $attempt++) {
@@ -135,6 +135,12 @@ for ($attempt = 1; $attempt -le $MaxAttempts -and -not $ok; $attempt++) {
         Write-Log ("Attempt $attempt exited with code {0} in {1:n0}s; report written: {2}" -f $p.ExitCode, ((Get-Date) - $start).TotalSeconds, $fresh)
         if ($p.ExitCode -ne 0) { Write-Log ("  " + ((Get-Content $out, $err -ErrorAction SilentlyContinue | Select-Object -Last 2) -join " | ")) }
         $ok = ($p.ExitCode -eq 0) -and $fresh
+        if ($ok) {
+            # Claude's structured output must cover every exception, with valid causes and owners
+            $vCode = Invoke-Py "validate_actions.py --date $date"
+            Write-Log "Validation of actions.json: $(if ($vCode -eq 0) { 'passed' } else { "failed (exit $vCode) - retrying" })"
+            $ok = ($vCode -eq 0)
+        }
     }
     if (-not $ok -and $attempt -lt $MaxAttempts) { Start-Sleep -Seconds 120 }
 }
@@ -142,7 +148,8 @@ for ($attempt = 1; $attempt -le $MaxAttempts -and -not $ok; $attempt++) {
 # --- Outcome --------------------------------------------------------------------------------
 if (-not $ok) {
     Stop-Run ("The checks ran (see checks_summary.md and exceptions.json in this folder), but Claude's report " +
-              "did not finish after $MaxAttempts attempts, so there is no up-to-date report or draft emails today.")
+              "did not finish, or did not pass validation, after $MaxAttempts attempts, so there is no up-to-date " +
+              "report or draft emails today.")
 }
 if (Test-Path $failNote) { Remove-Item $failNote }
 Write-Log "SUCCESS: report ready at $report"

@@ -459,7 +459,8 @@ def write_summary(path: Path, payload: dict):
         f"- Jobs checked: {payload['jobs_checked']} | invoice lines checked: {payload['invoice_lines_checked']}",
         f"- Open exceptions: **{s['total']}** (new {s['new']}, carried over {s['carried_over']}, "
         f"closed since last run {s['closed_since_last_run']}; previous run: {payload['previous_run'] or 'none'})",
-        f"- Needs human review: {s['needs_review']} | money at risk on invoices: {money(s['value_at_risk_gbp'])}",
+        f"- Needs human review: {s['needs_review']} | past response target: {s['overdue']} | "
+        f"money at risk on invoices: {money(s['value_at_risk_gbp'])} of {money(s['invoice_value_checked_gbp'])} checked",
         "",
         "| Check group | High | Medium | Low | Total |",
         "|---|---|---|---|---|",
@@ -468,18 +469,27 @@ def write_summary(path: Path, payload: dict):
         row = s["by_group_severity"].get(g, {})
         lines.append(f"| {g} {GROUPS[g]} | {row.get('high', 0)} | {row.get('medium', 0)} | {row.get('low', 0)} | "
                      f"{sum(row.values())} |")
-    lines += ["", "| # | Job | Check | What is wrong | Expected | Found | Severity | Status | Review? |",
-              "|---|---|---|---|---|---|---|---|---|"]
+    lines += ["", "| # | Job | Check | What is wrong | Expected | Found | Severity | Status | Days open | Due by | Review? |",
+              "|---|---|---|---|---|---|---|---|---|---|---|"]
     for i, e in enumerate(payload["exceptions"], 1):
         lines.append(f"| {i} | {e['job_id']} | {e['check']} {e['check_name']} | {e['what_is_wrong']} | "
-                     f"{e['expected']} | {e['found']} | {e['severity']} | {e['status']} | "
-                     f"{'Yes' if e['needs_human_review'] else ''} |")
+                     f"{e['expected']} | {e['found']} | {e['severity']} | {e['status']} | {e['days_open']} | "
+                     f"{e['due_by']}{' (overdue)' if e['overdue'] else ''} | {'Yes' if e['needs_human_review'] else ''} |")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 LOG_FIELDS = ["run_date", "jobs_checked", "total_open", "A_flow", "B_mismatch", "C_compliance", "D_invoices",
               "X_data_quality", "high", "medium", "low", "needs_review", "new", "carried_over",
-              "closed_since_last_run", "value_at_risk_gbp"]
+              "closed_since_last_run", "overdue", "value_at_risk_gbp"]
+
+
+def add_working_days(start: dt.date, n: int) -> dt.date:
+    d = start
+    while n > 0:
+        d += dt.timedelta(days=1)
+        if d.weekday() < 5:
+            n -= 1
+    return d
 
 
 def update_log(log_path: Path, payload: dict):
@@ -491,7 +501,7 @@ def update_log(log_path: Path, payload: dict):
            "high": s["by_severity"].get("high", 0), "medium": s["by_severity"].get("medium", 0),
            "low": s["by_severity"].get("low", 0), "needs_review": s["needs_review"], "new": s["new"],
            "carried_over": s["carried_over"], "closed_since_last_run": s["closed_since_last_run"],
-           "value_at_risk_gbp": f"{s['value_at_risk_gbp']:.2f}"}
+           "overdue": s["overdue"], "value_at_risk_gbp": f"{s['value_at_risk_gbp']:.2f}"}
     rows = read_csv(log_path) if log_path.exists() else []
     rows = [r for r in rows if r["run_date"] != row["run_date"]]  # a re-run on the same day replaces that day
     rows.append(row)
@@ -543,6 +553,24 @@ def main():
             e["first_seen"] = as_of.isoformat()
     keys = {e["key"] for e in exceptions}
 
+    # Response targets and ageing (deterministic: the due date is fixed when the exception is first raised)
+    resp = rules.get("response_working_days") or {"high": 1, "medium": 3, "low": 5}
+    for e in exceptions:
+        raised = dt.date.fromisoformat(e["first_seen"])
+        due = add_working_days(raised, int(resp.get(e["severity"], 3)))
+        e["days_open"] = (as_of - raised).days
+        e["due_by"] = due.isoformat()
+        e["overdue"] = as_of > due
+    ageing = Counter()
+    for e in exceptions:
+        d = e["days_open"]
+        ageing["0-1 days" if d <= 1 else "2-7 days" if d <= 7 else "8-30 days" if d <= 30 else "over 30 days"] += 1
+    by_supplier = defaultdict(float)
+    for e in exceptions:
+        if e["context"].get("value_at_risk_gbp") and e["context"].get("supplier"):
+            by_supplier[e["context"]["supplier"]] += e["context"]["value_at_risk_gbp"]
+    invoice_value = round(sum(float(l["quantity"]) * float(l["unit_price_gbp"]) for l in checker.invoices), 2)
+
     by_gs = defaultdict(Counter)
     for e in exceptions:
         by_gs[e["check"][0]][e["severity"]] += 1
@@ -557,6 +585,10 @@ def main():
         "carried_over": sum(e["status"] == "carried_over" for e in exceptions),
         "closed_since_last_run": len([k for k in prev if k not in keys]),
         "value_at_risk_gbp": round(sum(e["context"].get("value_at_risk_gbp", 0) for e in exceptions), 2),
+        "overdue": sum(e["overdue"] for e in exceptions),
+        "ageing": {b: ageing.get(b, 0) for b in ("0-1 days", "2-7 days", "8-30 days", "over 30 days")},
+        "value_at_risk_by_supplier": {k: round(v, 2) for k, v in sorted(by_supplier.items(), key=lambda kv: -kv[1])},
+        "invoice_value_checked_gbp": invoice_value,
     }
     payload = {
         "as_of": as_of.isoformat(),

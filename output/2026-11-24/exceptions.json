@@ -1,6 +1,6 @@
 {
   "as_of": "2026-11-24",
-  "generated_at": "2026-11-24T16:41:22",
+  "generated_at": "2026-11-24T17:17:29",
   "data_dir": "C:\\Dev\\Skills\\Exception checker\\Job Exception Checker\\data\\sample",
   "rules_file": "C:\\Dev\\Skills\\Exception checker\\Job Exception Checker\\config\\rules.yaml",
   "previous_run": "2026-11-23",
@@ -60,7 +60,19 @@
     "new": 1,
     "carried_over": 22,
     "closed_since_last_run": 0,
-    "value_at_risk_gbp": 3889.8
+    "value_at_risk_gbp": 3889.8,
+    "overdue": 0,
+    "ageing": {
+      "0-1 days": 23,
+      "2-7 days": 0,
+      "8-30 days": 0,
+      "over 30 days": 0
+    },
+    "value_at_risk_by_supplier": {
+      "Brightfield Wholesale Ltd": 2439.8,
+      "Kestrel Scaffolding Ltd": 1450.0
+    },
+    "invoice_value_checked_gbp": 143180.6
   },
   "exceptions": [
     {
@@ -84,7 +96,10 @@
         "installer_team": "Team B"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-24",
+      "overdue": false
     },
     {
       "key": "SJ-1002|C1|notification_sent",
@@ -107,7 +122,10 @@
         "installer_team": "Team A"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-24",
+      "overdue": false
     },
     {
       "key": "SJ-1007|C1|mcs_issued",
@@ -130,7 +148,10 @@
         "installer_team": "Team B"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-24",
+      "overdue": false
     },
     {
       "key": "SJ-1011|C1|handover_sent",
@@ -153,7 +174,10 @@
         "installer_team": "Team A"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-24",
+      "overdue": false
     },
     {
       "key": "SJ-1039|C1|mcs_issued",
@@ -176,7 +200,10 @@
         "installer_team": "Team B"
       },
       "status": "new",
-      "first_seen": "2026-11-24"
+      "first_seen": "2026-11-24",
+      "days_open": 0,
+      "due_by": "2026-11-25",
+      "overdue": false
     },
     {
       "key": "SJ-1025|C2|documents",
@@ -201,7 +228,10 @@
         "installer_team": "Team C"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-24",
+      "overdue": false
     },
     {
       "key": "SJ-1036|C2|documents",
@@ -226,7 +256,10 @@
         "installer_team": "Team C"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-24",
+      "overdue": false
     },
     {
       "key": "SJ-1008|D2|KSL-5328:SCAF-COM",
@@ -249,7 +282,10 @@
         "invoice_date": "2026-08-08"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-24",
+      "overdue": false
     },
     {
       "key": "SJ-1005|A1|dno_submitted",
@@ -271,7 +307,10 @@
         "current_stage": "design_complete"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1012|A1|dno_approval",
@@ -293,7 +332,10 @@
         "current_stage": "dno_submitted"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1018|A1|installed",
@@ -315,7 +357,10 @@
         "current_stage": "scaffold_booked"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1003|B1|panel_count",
@@ -337,7 +382,10 @@
         "installer_team": "Team B"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1009|B2|panel_model",
@@ -359,7 +407,10 @@
         "installer_team": "Team A"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1014|B3|inverter_model",
@@ -381,7 +432,10 @@
         "installer_team": "Team C"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1023|B4|battery_model",
@@ -403,7 +457,10 @@
         "installer_team": "Team A"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1030|B5|kwp",
@@ -425,7 +482,10 @@
         "installer_team": "Team B"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1016|B7|install_record",
@@ -446,7 +506,10 @@
         "current_stage": "commissioned"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1004|D1|BFW-24115:SP-430M",
@@ -469,7 +532,10 @@
         "invoice_date": "2026-06-17"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1019|D1|BFW-24164:INV-3.6S",
@@ -492,7 +558,10 @@
         "invoice_date": "2026-09-14"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1140|D3|BFW-24257",
@@ -514,7 +583,10 @@
         "invoice_date": "2026-11-14"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1031|D4|SP-430M",
@@ -535,7 +607,10 @@
         "installer_team": "Team A"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-26",
+      "overdue": false
     },
     {
       "key": "SJ-1021|A2|survey",
@@ -556,7 +631,10 @@
         "current_stage": "design_complete"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-30",
+      "overdue": false
     },
     {
       "key": "SJ-1033|B6|install_date",
@@ -578,7 +656,10 @@
         "installer_team": "Team B"
       },
       "status": "carried_over",
-      "first_seen": "2026-11-23"
+      "first_seen": "2026-11-23",
+      "days_open": 1,
+      "due_by": "2026-11-30",
+      "overdue": false
     }
   ]
 }

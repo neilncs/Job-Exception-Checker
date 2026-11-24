@@ -1,261 +1,260 @@
 # Solar Job Exceptions Checker
 
-A Claude Skill that checks a UK solar PV and battery installer's records every morning. It lists the jobs that are
-stuck, don't match, are missing compliance paperwork or have been overcharged, before a customer, the DNO or an MCS
-auditor notices.
+A daily exceptions review for a UK solar PV and battery installer. Every morning it reconciles the job tracker,
+installers' records, supplier invoices, the agreed price list and the compliance documents, and gives the office a
+prioritised list of what is stuck, mismatched, non-compliant or overcharged, with an owner, a due date and a drafted
+chase for each. It finds problems in days, before a customer, the DNO or an MCS assessor does.
 
-Each exception comes with the evidence, a likely root cause, an owner and a next action. The skill also drafts the
-chase emails. **It never sends anything, never edits the source data and never marks anything as resolved.** A
-person reviews the report and approves the drafts.
+Built by Neil with [Claude Code](https://claude.com/claude-code) as a Claude Skill. Python establishes the facts;
+Claude provides the judgement; a person makes the decisions. All data in this repository is synthetic.
 
-All data here is synthetic: fictional jobs, suppliers and product codes, with no real customers or addresses.
+![status](https://img.shields.io/badge/answer--key%20test-22%2F22%20caught%2C%200%20false%20alarms-1c7a4b)
+![status](https://img.shields.io/badge/bad--input%20tests-11%2F11-1c7a4b)
+![status](https://img.shields.io/badge/output%20contract%20tests-10%2F10-1c7a4b)
 
-**What people actually see** is a dashboard (`output/dashboard.html`). It opens in any browser, works offline and needs
-no login, and it's rebuilt after every run: status, trend, Claude's report, every exception with filters, and draft
-emails ready to copy. Nobody types into Claude; it runs in the background at 06:30. See
-[PRESENTING.md](PRESENTING.md) for how to run, view and demo it.
+---
+
+## Contents
+1. [The problem](#the-problem)
+2. [What it delivers](#what-it-delivers)
+3. [How it works](#how-it-works)
+4. [What it checks](#what-it-checks)
+5. [Controls: where people stay in charge](#controls-where-people-stay-in-charge)
+6. [Analytics](#analytics)
+7. [Expected impact](#expected-impact)
+8. [Evidence it works](#evidence-it-works)
+9. [Running it](#running-it)
+10. [Methods and tools](#methods-and-tools)
+11. [Limitations and next steps](#limitations-and-next-steps)
+12. [The same approach in e-commerce fulfilment](#the-same-approach-in-e-commerce-fulfilment)
 
 ---
 
 ## The problem
 
-On a domestic or small commercial solar job, the delivery information lives in several places that drift apart:
+On domestic and small commercial solar jobs, delivery information lives in five places that drift apart:
 
-- the **job tracker** (stages and dates)
-- the **installers' job sheets** (what was actually fitted)
-- **supplier invoices**, and the **agreed price list** they should match
-- the **compliance document folder**: MCS certificate, electrical installation certificate, G98/G99 notification,
-  warranty registrations, handover pack
+| Source | Holds | Typical failure |
+|---|---|---|
+| Job tracker | Stage dates from contract to handover | Stage not updated; dates typed wrong |
+| Installation records | What the team actually fitted | Kit substituted on site, never fed back |
+| Supplier invoices | What we're being charged | List price instead of agreed price; duplicates |
+| Agreed price list | What we should pay | Not shared with the supplier's billing team |
+| Compliance folder | MCS, EIC, G98/G99, warranties, handover pack | Job closed before the paperwork is filed |
 
-Nobody has time to cross-check all of them every day. So problems surface late: a G99 job connected before DNO
-approval, an MCS certificate missed, a scaffold hire paid twice, a tracker that says 12 panels when 10 were fitted.
-This skill does that cross-check daily and gives the office a short, prioritised list to work through.
+Cross-checking them by hand is slow, so it gets sampled or left to month end. The costly failures surface late: a G99
+job energised before DNO approval, an MCS certificate missed, scaffold hire paid twice, a tracker that says twelve
+panels when ten were fitted.
+
+## What it delivers
+
+Every working day, before 08:00:
+
+- **A dashboard** (`output/dashboard.html`, opens in any browser) showing status, today's decisions and priority
+  actions, root causes, workload by owner, money at risk and how long exceptions have been open.
+- **A report** (`exceptions_report.md`) in the order a manager reads it: decisions, priority actions, position, root
+  causes with one upstream fix each, then the full register.
+- **Draft chase emails**, one per supplier or team, quoting the references and both values that disagree. Nothing is sent.
+- **A run log** showing new, carried-over and closed exceptions, so the trend towards zero can be tracked.
+
+## How it works
+
+```mermaid
+flowchart LR
+    S["06:30 Task Scheduler<br/>wakes the PC"] --> V["Validate inputs<br/>(Python)"]
+    V -->|broken file| E["INPUT_ERROR.md<br/>red banner"]
+    V --> C["17 business checks<br/>(Python)"]
+    C --> J["exceptions.json<br/>facts, due dates, ageing"]
+    J --> R["Review<br/>(Claude, headless,<br/>read + write output/ only)"]
+    R --> A["actions.json<br/>cause, owner, priority"]
+    A --> X{"Validate against<br/>the facts (Python)"}
+    X -->|fails| R
+    X -->|passes| D["Report, drafts,<br/>dashboard"]
+    D --> H["Person decides,<br/>approves, sends"]
+```
+
+The design rule is **facts from code, judgement from Claude**:
+
+| Python (deterministic, tested) | Claude (judgement, validated) |
+|---|---|
+| Validates every file, column, date and number | Classifies each exception by root cause and owner |
+| Runs 17 business checks; every comparison, date gap and £ total | Spots patterns across jobs (one supplier, one installer team) |
+| Severity, due date and days open from `config/rules.yaml` | Ranks actions: compliance, customer delay, money, data |
+| Tracks new, carried-over and closed exceptions | Proposes one upstream fix per root cause |
+| Validates Claude's output against the facts | Writes the report and the chase emails |
+
+Arithmetic never depends on a language model, so the same data always gives the same exceptions, and that can be
+tested. Claude's output is structured (`actions.json`) and checked by code: it must cover every exception exactly
+once, using fixed lists of causes and owners, or the run is retried and then marked failed.
 
 ## What it checks
 
 | Group | Checks |
 |---|---|
-| **A. Flow** | A1 job stuck in a stage beyond its allowance · A2 stage reached but date missing · A3 dates out of order (e.g. G99 installed before DNO approval) |
-| **B. Mismatch** (tracker vs installation record) | B1 panel count · B2 panel model · B3 inverter · B4 battery · B5 kWp (panels × watts) · B6 install/commissioning date · B7 no installation record |
-| **C. Compliance** | C1 G98/G99 notification, MCS certificate or handover pack overdue after commissioning · C2 job marked complete with documents missing for its job type |
-| **D. Supplier invoices** | D1 unit price above agreed price beyond tolerance · D2 duplicate invoice line · D3 invoice for a job not in the tracker · D4 more invoiced than installed · D5 item not on the price list |
-| **X. Data quality** | Every input is validated first. A missing file or column, or a broken rules file, **stops the run with a clear message** and is never logged as a clean day. Bad rows (invalid date, word in a number field, duplicate ID) become X1 exceptions and are **quarantined**, so they can't cause knock-on false alarms |
-| **E. Root cause and action** | Claude groups exceptions by likely cause (data entry, supplier, scheduling, missing paperwork, DNO), names an owner, sets priorities and suggests **one upstream fix per cause** |
+| **A. Flow** | A1 stuck in a stage beyond its allowance · A2 stage reached with no date · A3 dates out of order (e.g. G99 installed before DNO approval) |
+| **B. Tracker vs installation** | B1 panel count · B2 panel model · B3 inverter · B4 battery · B5 kWp (panels × watts) · B6 install or commissioning date · B7 no installation record |
+| **C. Compliance** | C1 G98/G99 notification, MCS certificate or handover pack overdue after commissioning · C2 job marked complete with documents missing |
+| **D. Supplier invoices** | D1 price above agreed beyond tolerance · D2 duplicate line · D3 invoice for an unknown job · D4 more invoiced than installed · D5 item not on the price list |
+| **X. Data quality** | X1 bad or duplicate source record. Broken files stop the run with a clear message; bad rows are reported and quarantined so they can't cause false alarms |
 
-Full definitions are in [references/check_definitions.md](references/check_definitions.md). Every threshold is in
-**one editable file**, [config/rules.yaml](config/rules.yaml). Each value is marked PLACEHOLDER, and anything with a
-regulatory basis is marked "CHECK against current ENA/MCS guidance" rather than stated as fact.
+All thresholds (days per stage, post-commissioning deadlines, price tolerance, required documents, severities and
+response times) are in one file, [config/rules.yaml](config/rules.yaml). Values are business settings to confirm;
+anything with a regulatory basis is marked "check against current ENA/MCS guidance". Definitions, usual causes and
+owners: [references/check_definitions.md](references/check_definitions.md).
 
-## How the work is split: Python for facts, Claude for judgement
+## Controls: where people stay in charge
 
-| Deterministic Python (`scripts/run_checks.py`) | Claude (following `SKILL.md`) |
+| The system does, unattended | A person does |
 |---|---|
-| Reads the five CSVs and the rules | Reads the exceptions and evidence |
-| Every comparison, date difference and £ sum | Likely root cause, spotting patterns across jobs (same supplier, same installer team) |
-| Assigns severity from `rules.yaml` | Owner and one concrete next action |
-| Flags known ambiguities as *Needs human review* | Priority order (compliance, then customer delay, then money, then tidy-up) |
-| Tracks new / carried-over / closed exceptions across runs | Plain-English report and chase-email wording |
-| Writes `exceptions.json`, `checks_summary.md`, `run_log.csv` | Writes `exceptions_report.md` and `draft_emails/` |
+| Runs the checks and updates the log | Answers each decision (e.g. was that inverter swap approved?) |
+| Classifies, prioritises, sets due dates | Reviews, edits and **sends** each draft |
+| Drafts one chase per supplier or team | Fixes the source record; the next run confirms closure |
+| Flags anything ambiguous as a decision | Owns the thresholds in `rules.yaml` |
 
-The idea is that **arithmetic shouldn't depend on a language model**. The same data always produces the same
-exceptions, and that is what the test checks. Claude adds the part a good operations manager would add: why it
-happened, who should fix it, and what to change so it doesn't happen again. If the Claude step ever fails, the
-factual `checks_summary.md` is still written.
+These controls are enforced, not just written down:
 
-## What runs on its own, and where I step in
+- **Least privilege.** In the scheduled run, Claude Code starts with `--permission-mode dontAsk` and may only read
+  files and write inside `output/`. It has no shell, no email and no access to `data/` or `config/`. The runner runs
+  the checks itself before Claude starts.
+- **Fail loudly.** Broken input stops the run and is never logged as a clean day. A failed or incomplete run writes
+  `RUN_FAILED.md` and turns the dashboard amber. A stale report can't show green.
+- **Nothing closes by assertion.** An exception closes only when the data is fixed and a later run stops finding it.
 
-| Runs unattended (daily, 06:30) | Human in the loop |
+## Analytics
+
+| Measure | Why it matters | Where |
+|---|---|---|
+| Open exceptions and trend | Whether the operation is getting on top of its backlog | Dashboard chart, `run_log.csv` |
+| New / carried over / closed | Flow: are problems being closed as fast as they arise? | Dashboard, run log |
+| Severity mix and decisions needed | What needs senior attention today | Dashboard headline |
+| Past response target | Exceptions not actioned within 1, 3 or 5 working days | Dashboard, register |
+| Ageing (0–1, 2–7, 8–30, 30+ days) | Problems that are being tolerated rather than fixed | Dashboard |
+| Root causes, Pareto order | Which upstream fix removes the most exceptions | Dashboard, report §4 |
+| Workload by owner | Who is carrying the load; where to support | Dashboard |
+| Money at risk by supplier, % of spend checked | Supplier performance and credit to recover | Dashboard, report |
+| Detection accuracy | Precision and recall against a seeded answer key | `output/test_results.md` |
+
+## Expected impact
+
+**Measured on the sample data**
+
+| Measure | Result |
 |---|---|
-| Run all checks and update the run log | Read the report, starting with *Top actions* |
-| Group causes, assign owners, prioritise | Decide every *Needs human review* item (e.g. was that inverter swap approved?) |
-| Draft one chase email per supplier or team | Check, edit and **send** each draft myself |
-| Track whether the open count is falling | Fix the source data. An exception only closes when the next run stops finding it |
-| | Own the thresholds in `rules.yaml` |
+| Problems detected (recall) | 22 of 22 planted, 100% |
+| False alarms (precision) | 0 on 19 clean jobs, 100% |
+| Coverage | 100% of jobs and invoice lines, every working day |
+| Time to produce the review | About 2 minutes unattended |
+| Detection lag | Flagged on the first day past a limit (e.g. an MCS certificate on day 11 of a 10-day limit) |
+| Money flagged | £3,889.80, 2.7% of £143,180.60 invoiced (planted problems, so not a real-world rate) |
 
-The guardrails are enforced, not just requested. The scheduled run starts Claude Code with
-`--permission-mode dontAsk` and an allow-list of just two things: read files, and edit files under `output/`. The
-runner runs `run_checks.py` itself beforehand, so Claude has **no shell access at all**.
-Every other tool call is refused automatically. That includes sending email, editing `data/` or `config/`, and running
-any other command.
+**Estimated for a live operation of about 40 active jobs.** These figures use the assumptions shown. Replace them
+with your own figures.
 
-## Folder structure
+| Measure | Manual (assumed) | With the checker | Change |
+|---|---|---|---|
+| Time spent reconciling | 10 min per active job per week = 6.7 h/week | 15 min review per day = 1.25 h/week | **About 80% less** |
+| Invoice lines checked | Sample of about 25% | 100% | **4× coverage** |
+| Time to spot a missed deadline | Up to a week (weekly check) or month end | Next working day | **From days or weeks to under 1 day** |
+| Compliance items found by an assessor first | Some | Flagged internally first | Fewer findings |
 
-```
-solar-job-exceptions/
-  Run check now.cmd                one-click run (same as the scheduled job), then opens the dashboard
-  Open dashboard.cmd               opens the latest results without running anything
-  SKILL.md                         skill definition: when to trigger + the procedure Claude follows
-  PRESENTING.md                    how to run, where to look, how to demo it
-  config/rules.yaml                every threshold, in one place (placeholders)
-  scripts/generate_sample_data.py  builds 40 synthetic jobs with planted problems + answer key
-  scripts/run_checks.py            input validation + the deterministic checks
-  scripts/build_dashboard.py       builds output/dashboard.html from every run
-  scripts/test_against_answer_key.py   must catch 22/22 planted problems, 0 false alarms
-  scripts/test_bad_input.py        broken files and rows are caught, not crashed on
-  scripts/run_daily.ps1 / .sh      unattended runner (Task Scheduler / cron)
-  references/check_definitions.md  what each check means, usual causes and owners
-  templates/                       report and chase-email templates
-  data/sample/                     the synthetic CSVs + answer_key.csv
-  output/YYYY-MM-DD/               exceptions.json, checks_summary.md, exceptions_report.md, draft_emails/
-  output/run_log.csv               one row per day, so the open count can be tracked over time
-  output/dashboard.html            the page people look at
-  output/logs/                     what happened in each run, attempt by attempt
-```
+The financial case is `invoice spend × overcharge rate × share caught` plus the cost of compliance findings
+avoided. Both depend on the business's own figures.
 
-## How to run it
+## Evidence it works
 
-**Set up (once).** You need Python 3.10+ and [Claude Code](https://claude.com/claude-code).
+| Test | Result |
+|---|---|
+| `test_against_answer_key.py`: 40 synthetic jobs with 22 planted problems across every check | **22 / 22 caught, 0 false alarms** |
+| Same test on three other random seeds | Pass each time |
+| Thresholds tightened (2% to 1%, 10 days to 9): near-miss jobs must now trip | Both trip |
+| `test_bad_input.py`: invalid dates, words in number fields, duplicate IDs, negative quantities, missing column, missing file, broken rules | **11 / 11** |
+| `test_actions_validator.py`: Claude's output contract rejects incomplete or malformed classification | **10 / 10** |
+| Forced stall of the review step | Stopped after the time limit, retried, then marked failed |
+| Scheduled-run conditions (no `APPDATA`, clean environment) | Completes in about 80 to 170 seconds; source files unchanged |
+
+## Running it
+
+**Set up once** (Python 3.10+ and [Claude Code](https://claude.com/claude-code)):
 
 ```powershell
 python -m pip install -r requirements.txt
 ```
 
-```powershell
-python scripts/generate_sample_data.py
-```
+**Day to day, nobody types into Claude:**
 
-**Day to day, without Claude:** double-click **`Run check now.cmd`**, or let the 06:30 schedule run it. Then open the
-dashboard with **`Open dashboard.cmd`**.
+| To | Do |
+|---|---|
+| See this morning's results | Double-click **`Open dashboard.cmd`** |
+| Refresh now | Double-click **`Run check now.cmd`** (about 2 minutes) |
+| Run it every morning at 06:30 | `powershell -ExecutionPolicy Bypass -File scripts\register_task.ps1 -RunNow` (once) |
+| Remove the schedule | `powershell -ExecutionPolicy Bypass -File scripts\register_task.ps1 -Remove` |
 
-**1. On demand, by asking Claude** (for developers). Open Claude Code in this folder, or in a project where the skill is installed
-under `.claude/skills/solar-job-exceptions`, and say:
+The schedule wakes the PC from sleep on mains power, runs at next start-up if it was missed, keeps the PC awake while
+running, waits for the network, and limits each review attempt to 15 minutes with up to three attempts. On macOS or
+Linux, use `scripts/run_daily.sh` from cron (`30 6 * * *`).
 
-> run the solar job exceptions check
-
-Claude runs the checks, then writes the report and the drafts. To install it for every project, copy this folder to
-`%USERPROFILE%\.claude\skills\solar-job-exceptions` (or `~/.claude/skills/` on macOS/Linux).
-
-**2. One-off headless run** (the same thing the schedule does):
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\run_daily.ps1
-```
-
-**Just the deterministic checks**, without Claude:
+**For developers:**
 
 ```powershell
 python scripts/run_checks.py --as-of 2026-11-23
 ```
 
-**Tests:**
-
 ```powershell
 python scripts/test_against_answer_key.py
 ```
 
-```powershell
-python scripts/test_bad_input.py
-```
+Open Claude Code in this folder and ask it to "run the solar job exceptions check" to run the full review
+interactively. [PRESENTING.md](PRESENTING.md) covers where every output lives and how to demo it.
 
-## Scheduling it daily
-
-The goal is a finished report waiting at the start of the working day. The task starts at **06:30**. A normal run
-takes about 3 minutes, and the worst case with all three retries is about an hour, so the report is ready well before
-08:00.
-
-**Windows Task Scheduler.** From this folder, run once (it works out its own paths, registers the task and starts
-a test run):
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\register_task.ps1 -RunNow
-```
-
-Remove it later with `-Remove` instead of `-RunNow`. The script runs the equivalent of these commands:
-
-```powershell
-$action   = New-ScheduledTaskAction -Execute "powershell.exe" -Argument '-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File "C:\Dev\Skills\Exception checker\Job Exception Checker\scripts\run_daily.ps1"'
-$trigger  = New-ScheduledTaskTrigger -Daily -At 6:30am
-$settings = New-ScheduledTaskSettingsSet -WakeToRun -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Minutes 90)
-Register-ScheduledTask -TaskName "Solar Job Exceptions" -Action $action -Trigger $trigger -Settings $settings -Description "Daily solar job exceptions check (Claude Code headless)"
-```
-
-What each setting is for:
-
-- **`-WakeToRun`** wakes the PC from sleep at 06:30. Windows only allows this when wake timers are enabled. On this
-  laptop they are enabled on mains power and disabled on battery, so **leave it plugged in overnight**.
-- **`-StartWhenAvailable`** is the fallback. If the PC was off or couldn't wake, the run starts as soon as you switch
-  it on, and the report is ready about 3 minutes later.
-- **`-ExecutionTimeLimit 90 min`** is a last-resort stop. The runner already limits each attempt itself.
-
-What the runner does to make an unattended run reliable:
-
-- **Keeps the PC awake while it runs.** In one test the laptop went into Modern Standby a minute in. The Wi-Fi
-  dropped and the run froze for 96 minutes until the laptop woke.
-- **Waits up to 10 minutes for the network** after waking.
-- **Stops any attempt after 15 minutes** and tries again, up to 3 attempts.
-- **If every attempt fails,** the deterministic checks still run, and `RUN_FAILED.md` in that day's folder says what
-  is missing and how to finish it. You find out at 08:00 rather than discovering a half-finished folder.
-
-Every attempt is timed in `output/logs/YYYY-MM-DD.log`.
-
-Test it straight away, and remove it when you're finished:
-
-```powershell
-Start-ScheduledTask -TaskName "Solar Job Exceptions"
-```
-
-```powershell
-Unregister-ScheduledTask -TaskName "Solar Job Exceptions" -Confirm:$false
-```
-
-The task runs while you are logged in (a locked screen is fine), using your Claude Code CLI sign-in. That sign-in is
-separate from the desktop app's: check it with `claude auth status`. Remember a sign-in can expire, and the run then
-fails with a 401 in the log.
-
-**cron (macOS/Linux):**
+### Repository layout
 
 ```
-0 7 * * * /path/to/solar-job-exceptions/scripts/run_daily.sh
+SKILL.md                         the review procedure Claude follows
+config/rules.yaml                every threshold and response time, in one place
+references/                      check definitions, writing standards
+templates/                       report and chase-email templates
+scripts/run_checks.py            input validation and the 17 checks
+scripts/validate_actions.py      validates Claude's classification against the facts
+scripts/build_dashboard.py       builds output/dashboard.html
+scripts/run_daily.ps1 / .sh      unattended runner
+scripts/register_task.ps1        registers or removes the 06:30 task
+scripts/generate_sample_data.py  synthetic data with planted problems and an answer key
+scripts/test_*.py                answer-key, bad-input and output-contract tests
+data/sample/                     the synthetic inputs
+output/YYYY-MM-DD/               each day's facts, actions, report and drafts
+output/run_log.csv               one row per day
 ```
 
-What the runner executes:
+## Methods and tools
 
-```
-claude -p "Run the solar job exceptions check. Follow SKILL.md in this folder exactly. This is an unattended scheduled run: do not ask questions; put anything uncertain under Needs human review." --permission-mode dontAsk --allowedTools "Read" "Glob" "Grep" "Bash(python scripts/run_checks.py:*)" "PowerShell(python scripts/run_checks.py:*)" "Edit(./output/**)"
-```
+**Methods**
+- *Management by exception.* Report only what breaks a rule, with an owner and a due date.
+- *Reconciliation and three-way match.* Price list against invoice against what was installed. Tracker against job sheet against document set.
+- *Stage-gate service levels.* A time allowance per stage, and response targets per severity.
+- *Root-cause analysis with Pareto ranking*, and one upstream fix per cause (error-proofing, as in Lean).
+- *Human in the loop, least privilege and fail-closed design.*
+- *Contract-validated AI output.* Structured JSON checked by code before anything is shown.
+- *Seeded-defect testing.* A synthetic data set with a known answer key, near-miss cases and threshold mutation, measuring precision and recall.
 
-## Test result
+**Tools.** Python 3 (standard library and PyYAML) · Claude Code (Skills, headless mode, permission controls) ·
+PowerShell and Windows Task Scheduler · HTML and JavaScript (no framework, works offline) · Git and GitHub.
 
-The sample data has **22 planted problems** across all four check groups. It also has near misses that must *not*
-be flagged: an invoice 1.5% over list when the tolerance is 2%, and an MCS certificate outstanding at exactly 10 days
-when the limit is 10.
+## Limitations and next steps
 
-| | Result |
-|---|---|
-| Planted problems caught | **22 / 22 (100%)** |
-| False alarms | **0** |
-| Clean jobs flagged | **0 of 19** |
-| Re-generated with three other random seeds | 22 / 22, 0 false alarms each time |
-| Tolerance tightened to 1% / MCS limit to 9 days | The two near-miss jobs flagged, as they should be |
-| Bad input (`test_bad_input.py`): invalid date, non-number, duplicate IDs, negative quantity, missing column, missing file, broken rules | **11 / 11**. Bad rows reported and quarantined with no knock-on false alarms; broken files stop the run cleanly without touching the run log |
-| Forced stall (attempt limited to 1 minute) | Attempt stopped, no stray processes, `RUN_FAILED.md` written, facts still available |
-| Unattended run via `run_daily.ps1` (headless, locked-down permissions) | Report covering all 22 exceptions plus 7 drafts, all marked not sent. The 5 data files, the answer key and `rules.yaml` were byte-for-byte unchanged |
+- Inputs are CSV exports. Next: read directly from the job-management, accounting and document systems' APIs.
+- Bank holidays are not excluded from working-day targets.
+- Thresholds are placeholders until confirmed against the business's own service levels and current ENA and MCS guidance.
+- Next: weekly summary of which upstream fixes reduced exceptions; time-to-close per owner; a cloud-scheduled version that runs with the PC off.
 
-The full table is in `output/test_results.md`. Re-run it any time with
-`python scripts/test_against_answer_key.py`.
-
-## How this maps to e-commerce fulfilment
-
-The same pattern (reconcile several systems, find exceptions against agreed limits, and route each one to an owner
-with a drafted chase) carries straight across:
+## The same approach in e-commerce fulfilment
 
 | Solar installer | E-commerce fulfilment |
 |---|---|
-| Job | Order |
-| Job tracker stages (survey, install, commission, handover) | Order status (paid, picked, packed, shipped, delivered) |
-| Installation record (what was actually fitted) | WMS / 3PL record (what was actually picked and shipped) |
-| Supplier invoices | Carrier and 3PL invoices |
-| Agreed price list | Carrier rate card |
-| Stage thresholds (days allowed per stage) | SLAs (dispatch within 24 h, deliver within 3 days) |
-| Compliance documents (MCS, G98/G99, handover pack) | Proof of delivery, customs paperwork, returns labels |
-| Panel count mismatch | Short shipment / wrong SKU |
-| Duplicate scaffold invoice | Carrier double-billing a parcel |
-| Invoice for a job not in the tracker | Carrier charge for an order that doesn't exist |
-
-## Limitations
-
-- CSV in, Markdown out, to keep the demo small. In real use the inputs would be exports from the CRM, job management
-  and accounting systems, pointed to with `--data`.
-- Thresholds are placeholders until confirmed. Regulatory timings must be checked against current ENA and MCS
-  guidance.
-- Claude's root-cause calls are suggestions with evidence, not conclusions. That's why a human reviews them.
+| Job and its stages | Order: paid, picked, packed, shipped, delivered |
+| Installation record | WMS or 3PL record of what was actually shipped |
+| Agreed supplier price list | Carrier rate card |
+| Days allowed per stage | SLAs: dispatch within 24 hours, deliver within 3 days |
+| MCS, G98/G99, handover pack | Proof of delivery, customs documents, returns labels |
+| Panel count mismatch | Short shipment or wrong SKU |
+| Duplicate scaffold invoice | Carrier billing a parcel twice |
+| Invoice for an unknown job | Carrier charge for an order that doesn't exist |
